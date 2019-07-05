@@ -12,3 +12,19 @@
 #sidebar.active {
     margin-left: -250px;
 }
+
+.nameBox {
+    width: 100%;
+}
+
+.nameInput {
+    width: 70%;
+    float: left;
+}
+
+.nameBtn {
+    width: 25%;
+    float: right;
+    background: red;
+}
+

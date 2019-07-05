@@ -72,14 +72,7 @@ class Home extends Component {
   assignPosition = (arr) => {
     let counter = 0
     let holder = []
-    // for(let i = 0; i < arr.length; i++){
-    //   counter++
-    //   if(counter > 1){
-    //     holder.push(arr[i])
-    //   } 
-    // }
-    // console.log(holder)
-
+  
     arr.forEach((p, i, arr) => {
       counter++
       switch(counter) {
@@ -148,7 +141,6 @@ class Home extends Component {
   render() {
     return (
       <Container className="homeContainer" fluid>
-      <div className="fieldContainer">
         <Row>
           <Col>
             <Names 
@@ -156,38 +148,87 @@ class Home extends Component {
             handleInputChange={this.handleInputChange} 
             enterName={this.enterName}
             />
-            <button type="submit" className="btn btn-secondary" onClick={this.generateLineup}>Generate Lineup</button>
+            <button type="submit" className="btn btn-secondary generateBtn" onClick={this.generateLineup}>Generate Lineup</button>
+            </Col>
+            <Col>
             <div>
-              <h1>Players</h1>
+              <h5>Players</h5>
               <div className="playerBox">{this.state.roster.join(", ")}</div>
             </div>
-            <div>
-              <h1>Batting Order</h1>
-              <div className="playerBox">{this.state.offense.join(", ")}</div>
-            </div>
-            <div>
-              <h1>Fielding Order</h1>
-              <div className="playerBox">{this.state.defense.join(", ")}</div>
-            </div>
-            <div>
-              <h1>Positions</h1>
-              <div className="playerBox">
-              <div>Pitcher: {this.state.pitcher}</div>
-              <div>shortStop: {this.state.shortStop}</div>
-              <div>Third: {this.state.third}</div>
-              <div>first: {this.state.first}</div>
-              <div>Second: {this.state.second}</div>
-              <div>Catcher: {this.state.catcher}</div>
-              <div>Left Left: {this.state.leftLeft}</div>
-              <div>Left Center: {this.state.leftCenter}</div>
-              <div>Right Center: {this.state.rightCenter}</div>
-              <div>Right Right: {this.state.rightRight}</div>
-              <div>Bench: {this.state.bench.join(", ")}</div>
+            </Col>
+            </Row>
+            <Row className="positionRow">
+              <Col>
+                <div>
+                  <h5>Batting Order</h5>
+                  <div className="playerBox">{this.state.offense.join(", ")}</div>
+                </div>
+              </Col>
+            </Row>
+            <Row className="title">
+              <h5>Outfield</h5>
+            </Row>
+            <Row className="positionRow">
+              <Col>
+                <h5 className="playerBox position" >LL</h5>
+                <div className="playerBox" >{this.state.leftLeft}</div>
+              </Col>
+              <Col>
+                <h5 className="playerBox position">LC</h5>
+                <div className="playerBox">{this.state.leftCenter}</div>
+              </Col>
+              <Col>
+                <h5 className="playerBox position">RC</h5>
+                <div className="playerBox">{this.state.rightCenter}</div>
+              </Col>
+              <Col>
+                <h5 className="playerBox position">RR</h5>
+                <div className="playerBox">{this.state.rightRight}</div>
+              </Col>
+              
+            </Row>
+            <Row className="title">
+              <h5>Infield</h5>
+            </Row>
+            <Row className="positionRow">
+              <Col>
+                <h5 className="playerBox position">Third</h5>
+                <div className="playerBox">{this.state.third}</div>
+              </Col>
+              <Col>
+                <h5 className="playerBox position">Short Stop</h5>
+                <div className="playerBox">{this.state.shortStop}</div>
+              </Col>
+              <Col>
+                <h5 className="playerBox position">Second</h5>
+                <div className="playerBox">{this.state.second}</div>
+              </Col>
+              <Col>
+                <h5 className="playerBox position">First</h5>
+                <div className="playerBox">{this.state.first}</div>
+              </Col>
+            </Row>
+            <Row className="title">
+              <h5>Pitcher / Catcher</h5>
+            </Row>
+            <Row className="positionRow">
+              <Col>
+                <h5 className="playerBox position">Pitcher</h5>
+                <div className="playerBox">{this.state.pitcher}</div>
+              </Col>
+              <Col>
+                <h5 className="playerBox position">Catcher</h5>
+                <div className="playerBox">{this.state.catcher}</div>
+              </Col>
+            </Row>
+            <Row className="positionRow">
+              <Col>
+              <div>
+                <h5>Bench</h5>
+                <div className="playerBox">{this.state.bench.join(", ")}</div>
               </div>
-            </div>
-          </Col>
-        </Row>
-        </div>
+              </Col>
+            </Row>
       </Container>
     );
   }

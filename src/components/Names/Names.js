@@ -3,17 +3,16 @@ import React from "react";
 import "./Names.css"
 
 const Names = (props) => (
- 
+ <div>
+  <h5>Enter one players name at a time:</h5>
   <div className="wrapper wrapperBox">
-    <form>
-        <div className="form-group">
-            <label>Enter 1 player name at a time:</label>
+    <form className="nameBox">
+        <div className="form-group nameInput">
             <input type="text" className="form-control" placeholder="name" name="player" value={props.player} onChange={props.handleInputChange}/>
-            <small className="form-text text-muted">Name</small>
         </div>
-        <button type="submit" className="btn btn-primary" onClick={props.enterName}>Add Player</button>
+        <button type="submit" className="btn btn-primary nameBtn" onClick={props.enterName}>Add Player</button>
     </form>
-
+</div>
 </div>
 );
 
