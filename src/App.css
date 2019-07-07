@@ -1,9 +1,6 @@
-/* body {
-    background: url("https://cdn.pixabay.com/photo/2018/10/28/13/22/baseball-3778774_960_720.png");
-    background-position: top;
-    background-repeat: no-repeat;
-    background-size: cover;
-} */
+body {
+    background: #eee;
+}
 
 html, body {
     height: 100%;

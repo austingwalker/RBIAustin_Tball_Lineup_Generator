@@ -19,7 +19,23 @@
     width: 25%;
 }
 
+.editBtn {
+    float: right;
+    color: white;
+    background: green;
+}
+
+.playerRowBox {
+    background: white;
+    border: 1px solid gray;
+    float: left;
+    width: 100px;
+    padding: 5px;
+    text-align: center;
+}
+
 .playerBox {
+    background: white;
     border: 1px solid gray;
     border-radius: 5px;
     height: 50px;

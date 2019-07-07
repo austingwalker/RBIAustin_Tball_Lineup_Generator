@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 // import API from "../../utils/API";
 import { Container, Row, Col } from 'reactstrap';
+import ContentEditable from 'react-contenteditable'
+import update from 'immutability-helper';
 import Names from "../../components/Names";
 import "./Home.css"
 
@@ -22,7 +24,9 @@ class Home extends Component {
     leftCenter: "",
     leftLeft: "",
     bench: [],
-    inning: 1
+    inning: 1,
+    html: "",
+    addPlayer: false
   };
 
   handleInputChange = event => {
@@ -32,11 +36,38 @@ class Home extends Component {
     });
   };
 
+  handleChange = (e) => {
+    console.log(e)
+    const name = e.currentTarget.title
+    this.setState({[name]: e.target.value})
+  }
+
+  handlePlayerChange = (e) => {
+    console.log(e)
+    const index = e.currentTarget.title
+    const i = parseInt(index, 10)
+    const element = this.state.roster[index]
+    console.log(i)
+    console.log(e.target.value)
+    const newArr = update(this.state.roster, {i: {$set: e.target.value}})
+    console.log(newArr)
+    console.log(this.state.roster)
+    // if(e.target.value === "undefined"){
+    //   this.setState({roster: update(this.state.roster, {i: {name: {$set: ""}}})
+    // })
+    // } else {
+    //   this.setState({roster: update(this.state.roster, {i: {name: {$set: e.target.value}}})
+    // })
+    // }
+   
+}
+
   enterName = event => {
     event.preventDefault();
       this.setState({ 
         roster: [...this.state.roster, this.state.player],
-        player: ""
+        player: "",
+        addPlayer: true
       });
   };
 
@@ -137,6 +168,13 @@ class Home extends Component {
 
   }
 
+  renderPlayers = () => {
+    if(this.state.addPlayer){
+
+      return 
+    }
+  }
+
 
   render() {
     return (
@@ -153,16 +191,25 @@ class Home extends Component {
             <Col>
             <div>
               <h5>Players</h5>
-              <div className="playerBox">{this.state.roster.join(", ")}</div>
+              {this.state.roster.map((p, i)=> (
+                   <ContentEditable
+                   key={i}
+                   className="playerBox position"
+                   title={i}
+                   html={this.state.roster[i]}
+                   onChange={this.handlePlayerChange}
+                   />
+                  ))}
+             
             </div>
             </Col>
             </Row>
             <Row className="positionRow">
               <Col>
-                <div>
                   <h5>Batting Order</h5>
-                  <div className="playerBox">{this.state.offense.join(", ")}</div>
-                </div>
+                  {this.state.offense.map((p, i)=> (
+                  <div className="playerRowBox">{`${i+1}.) ${p}`}</div>
+                  ))}
               </Col>
             </Row>
             <Row className="title">
@@ -170,20 +217,40 @@ class Home extends Component {
             </Row>
             <Row className="positionRow">
               <Col>
-                <h5 className="playerBox position" >LL</h5>
-                <div className="playerBox" >{this.state.leftLeft}</div>
+              <h5 className="playerBox position" >LL</h5>
+                <ContentEditable
+                className="playerBox position"
+                title="leftLeft"
+                html={this.state.leftLeft}
+                onChange={this.handleChange}
+                />
               </Col>
               <Col>
                 <h5 className="playerBox position">LC</h5>
-                <div className="playerBox">{this.state.leftCenter}</div>
+                <ContentEditable
+                className="playerBox position"
+                title="leftCenter"
+                html={this.state.leftCenter}
+                onChange={this.handleChange}
+                />
               </Col>
               <Col>
                 <h5 className="playerBox position">RC</h5>
-                <div className="playerBox">{this.state.rightCenter}</div>
+                <ContentEditable
+                className="playerBox position"
+                title="rightCenter"
+                html={this.state.rightCenter}
+                onChange={this.handleChange}
+                />
               </Col>
               <Col>
                 <h5 className="playerBox position">RR</h5>
-                <div className="playerBox">{this.state.rightRight}</div>
+                <ContentEditable
+                className="playerBox position"
+                title="rightRight"
+                html={this.state.rightRight}
+                onChange={this.handleChange}
+                />
               </Col>
               
             </Row>
@@ -193,19 +260,39 @@ class Home extends Component {
             <Row className="positionRow">
               <Col>
                 <h5 className="playerBox position">Third</h5>
-                <div className="playerBox">{this.state.third}</div>
+                <ContentEditable
+                className="playerBox position"
+                title="third"
+                html={this.state.third}
+                onChange={this.handleChange}
+                />
               </Col>
               <Col>
                 <h5 className="playerBox position">Short Stop</h5>
-                <div className="playerBox">{this.state.shortStop}</div>
+                <ContentEditable
+                className="playerBox position"
+                title="shortStop"
+                html={this.state.shortStop}
+                onChange={this.handleChange}
+                />
               </Col>
               <Col>
                 <h5 className="playerBox position">Second</h5>
-                <div className="playerBox">{this.state.second}</div>
+                <ContentEditable
+                className="playerBox position"
+                title="second"
+                html={this.state.second}
+                onChange={this.handleChange}
+                />
               </Col>
               <Col>
                 <h5 className="playerBox position">First</h5>
-                <div className="playerBox">{this.state.first}</div>
+                <ContentEditable
+                className="playerBox position"
+                title="first"
+                html={this.state.first}
+                onChange={this.handleChange}
+                />
               </Col>
             </Row>
             <Row className="title">
@@ -214,18 +301,31 @@ class Home extends Component {
             <Row className="positionRow">
               <Col>
                 <h5 className="playerBox position">Pitcher</h5>
-                <div className="playerBox">{this.state.pitcher}</div>
+                <ContentEditable
+                className="playerBox position"
+                title="pitcher"
+                html={this.state.pitcher}
+                onChange={this.handleChange}
+                />
               </Col>
               <Col>
                 <h5 className="playerBox position">Catcher</h5>
-                <div className="playerBox">{this.state.catcher}</div>
+                <ContentEditable
+                className="playerBox position"
+                title="catcher"
+                html={this.state.catcher}
+                onChange={this.handleChange}
+                />
               </Col>
             </Row>
             <Row className="positionRow">
               <Col>
               <div>
                 <h5>Bench</h5>
-                <div className="playerBox">{this.state.bench.join(", ")}</div>
+                <div className="playerBox">
+                  {this.state.bench.join(", ")}
+                  <button type="submit" className="btn editBtn" >Edit</button>
+                </div>
               </div>
               </Col>
             </Row>
