@@ -17,18 +17,20 @@ class Home extends Component {
       order: []
     },
     defense: {},
-    pitcher: "",
-    catcher: "",
-    first: "",
-    second: "",
-    shortStop: "",
-    third: "",
-    rightRight: "",
-    rightCenter: "",
-    leftCenter: "",
-    leftLeft: "",
+    positions: { 
+    pitcher: {inning: [[{one: ""}], [{two: ""}], [{three: ""}]]},
+    catcher: {inning: [[{one: ""}], [{two: ""}], [{three: ""}]]},
+    first: {inning: [[{one: ""}], [{two: ""}], [{three: ""}]]},
+    second: {inning: [[{one: ""}], [{two: ""}], [{three: ""}]]},
+    shortStop: {inning: [[{one: ""}], [{two: ""}], [{three: ""}]]},
+    third: {inning: [[{one: ""}], [{two: ""}], [{three: ""}]]},
+    rightRight: {inning: [[{one: ""}], [{two: ""}], [{three: ""}]]},
+    rightCenter: {inning: [[{one: ""}], [{two: ""}], [{three: ""}]]},
+    leftCenter: {inning: [[{one: ""}], [{two: ""}], [{three: ""}]]},
+    leftLeft: {inning: [[{one: ""}], [{two: ""}], [{three: ""}]]},
     bench: {
-      kids:[]
+      inning:[[{one: []}], [{two: []}], [{three: []}]]
+    } 
     },
     inning: 1,
     html: "",
@@ -125,6 +127,7 @@ handleBenchChange = (e) => {
       offense: {order: battingOrder},
       defense: obj
     })
+    
     this.assignPosition(obj)
   }
 
@@ -145,12 +148,106 @@ handleBenchChange = (e) => {
   }
 
   assignPosition = (obj) => {
-    console.log(obj)
-    for (let key in obj) {
-      if (obj.hasOwnProperty(key)) {
-          console.log(key + " -> " + obj[key].first);
+    console.log(this.state.positions)
+    // let counter = 1
+    let index = 0
+    
+      let holder = []
+      for (let key in obj) {
+      
+      switch(index) {
+        case 0:
+        console.log("pitcher")
+        const addPitcher = update(...this.state.positions, {pitcher: {inning: {[0]: {[0]: {one: {$set: key}}}}}})
+          this.setState({
+            positions: addPitcher
+          })
+          index++
+          break;
+        case 1:
+        console.log("short")
+        const addShort = update(...this.state.positions, {shortStop: {inning: {[0]: {[0]: {one: {$set: key}}}}}})
+          this.setState({
+            positions: addShort
+          })
+          index++
+        break;
+        case 2:
+        console.log("third")
+        const addThird = update(...this.state.positions, {third: {inning: {[0]: {[0]: {one: {$set: key}}}}}})
+          this.setState({
+            positions: addThird
+          })
+          index++
+        break;
+        case 3:
+        console.log("first")
+        const addFirst = update(...this.state.positions, {first: {inning: {[0]: {[0]: {one: {$set: key}}}}}})
+          this.setState({
+            positions: addFirst
+          })
+          index++
+        break;
+        case 4:
+        console.log("second")
+        const addSecond = update(...this.state.positions, {second: {inning: {[0]: {[0]: {one: {$set: key}}}}}})
+          this.setState({
+            positions: addSecond
+          })
+          index++
+        break;
+        case 5:
+        console.log("catcher")
+        const addCatcher = update(...this.state.positions, {catcher: {inning: {[0]: {[0]: {one: {$set: key}}}}}})
+          this.setState({
+            positions: addCatcher
+          })
+          index++
+        break;
+        case 6:
+        console.log("LL")
+        const addLL = update(...this.state.positions, {leftLeft: {inning: {[0]: {[0]: {one: {$set: key}}}}}})
+          this.setState({
+            positions: addLL
+          })
+          index++
+        break;
+        case 7:
+        console.log("LC")
+        const addLC = update(...this.state.positions, {leftCenter: {inning: {[0]: {[0]: {one: {$set: key}}}}}})
+          this.setState({
+            positions: addLC
+          })
+          index++
+        break;
+        case 8:
+        console.log("RC")
+        const addRC = update(...this.state.positions, {rightCenter: {inning: {[0]: {[0]: {one: {$set: key}}}}}})
+          this.setState({
+            positions: addRC
+          })
+          index++
+        break;
+        case 9:
+        console.log("RR")
+        const addRR = update(...this.state.positions, {rightRight: {inning: {[0]: {[0]: {one: {$set: key}}}}}})
+          this.setState({
+            positions: addRR
+          })
+          index++
+        break;
+        default:
+        console.log("bench")
+         holder.push(key)
+         index++
       }
-    }
+    
+    const newObj = update(this.state.positions.bench, {inning: {one: {$set: holder}}})
+      this.setState({
+        bench: newObj
+      })
+  }
+      
     // let counter = 0
     // let holder = []
   
@@ -212,11 +309,8 @@ handleBenchChange = (e) => {
     //   }
     
     // });
-    // const newObj = update(this.state.bench, {kids: {$set: holder}})
-    // this.setState({
-    //   bench: newObj
-    // })
-
+    
+    
   }
 
   renderPlayers = () => {
@@ -224,6 +318,10 @@ handleBenchChange = (e) => {
 
       return 
     }
+  }
+
+  logs = () => {
+    console.log(this.state.positions)
   }
 
 
@@ -238,6 +336,7 @@ handleBenchChange = (e) => {
             enterName={this.enterName}
             />
             <button type="submit" className="btn btn-secondary generateBtn" onClick={this.generateLineup}>Generate Lineup</button>
+            <button type="submit" className="btn btn-secondary generateBtn" onClick={this.logs}>Console Log</button>
             </Col>
             <Col className="rosterBox">
             <div >
@@ -258,7 +357,7 @@ handleBenchChange = (e) => {
               <Col className="battingOrderCol">
                   <h5 className="order">Batting Order</h5>
                   {this.state.offense.order.map((p, i)=> (
-                  <div className="playerRowBox">
+                  <div className="playerRowBox" key={i}>
                   <div>{`${i+1}. )`}</div>
                    <ContentEditable
                    key={i}
@@ -279,7 +378,7 @@ handleBenchChange = (e) => {
                 <ContentEditable
                 className="playerBox position"
                 title="leftLeft"
-                html={this.state.leftLeft}
+                html={this.state.positions.leftLeft.inning[0][0].one}
                 onChange={this.handleChange}
                 />
               </Col>
@@ -288,7 +387,7 @@ handleBenchChange = (e) => {
                 <ContentEditable
                 className="playerBox position"
                 title="leftCenter"
-                html={this.state.leftCenter}
+                html={this.state.positions.leftCenter.inning[0][0].one}
                 onChange={this.handleChange}
                 />
               </Col>
@@ -297,7 +396,7 @@ handleBenchChange = (e) => {
                 <ContentEditable
                 className="playerBox position"
                 title="rightCenter"
-                html={this.state.rightCenter}
+                html={this.state.positions.rightCenter.inning[0][0].one}
                 onChange={this.handleChange}
                 />
               </Col>
@@ -306,7 +405,7 @@ handleBenchChange = (e) => {
                 <ContentEditable
                 className="playerBox position"
                 title="rightRight"
-                html={this.state.rightRight}
+                html={this.state.positions.rightRight.inning[0][0].one}
                 onChange={this.handleChange}
                 />
               </Col>
@@ -321,7 +420,7 @@ handleBenchChange = (e) => {
                 <ContentEditable
                 className="playerBox position"
                 title="third"
-                html={this.state.third}
+                html={this.state.positions.third.inning[0][0].one}
                 onChange={this.handleChange}
                 />
               </Col>
@@ -330,7 +429,7 @@ handleBenchChange = (e) => {
                 <ContentEditable
                 className="playerBox position"
                 title="shortStop"
-                html={this.state.shortStop}
+                html={this.state.positions.shortStop.inning[0][0].one}
                 onChange={this.handleChange}
                 />
               </Col>
@@ -339,7 +438,7 @@ handleBenchChange = (e) => {
                 <ContentEditable
                 className="playerBox position"
                 title="second"
-                html={this.state.second}
+                html={this.state.positions.second.inning[0][0].one}
                 onChange={this.handleChange}
                 />
               </Col>
@@ -348,7 +447,7 @@ handleBenchChange = (e) => {
                 <ContentEditable
                 className="playerBox position"
                 title="first"
-                html={this.state.first}
+                html={this.state.positions.first.inning[0][0].one}
                 onChange={this.handleChange}
                 />
               </Col>
@@ -362,7 +461,7 @@ handleBenchChange = (e) => {
                 <ContentEditable
                 className="playerBox position"
                 title="pitcher"
-                html={this.state.pitcher}
+                html={this.state.positions.pitcher.inning[0][0].one}
                 onChange={this.handleChange}
                 />
               </Col>
@@ -371,7 +470,7 @@ handleBenchChange = (e) => {
                 <ContentEditable
                 className="playerBox position"
                 title="catcher"
-                html={this.state.catcher}
+                html={this.state.positions.catcher.inning[0][0].one}
                 onChange={this.handleChange}
                 />
               </Col>
@@ -381,7 +480,7 @@ handleBenchChange = (e) => {
             </Row>
             <Row className="positionRow">
               <Col className="battingOrderCol">
-                {this.state.bench.kids.map((p, i)=> (
+                {this.state.positions.bench.inning[0][0].one.map((p, i)=> (
                   <div className="benchBox">
                    <ContentEditable
                    key={i}
