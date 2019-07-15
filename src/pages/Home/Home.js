@@ -37,7 +37,8 @@ class Home extends Component {
     index: -1,
     counter: 0,
     holder: [],
-    benchCount: 0
+    benchCount: 0,
+    fieldCount: 0,
   };
 
 handleInputChange = event => {
@@ -268,13 +269,15 @@ generateSecondInning = () => {
       return p
     }
   })
-  const nonBench = secondInning.filter(p => {
+  const fielders = secondInning.filter(p => {
     if(!p.player.bench === true){
       return p
     }
   })
 
   const benchLength = bench.length
+  const fieldersLength = fielders.length
+  console.log(fielders)
 
   if(benchLength > this.state.benchCount){
     if(this.state.positions.pitcher.inning[1].two === ""){
@@ -328,15 +331,41 @@ generateSecondInning = () => {
           this.state.benchCount++
   }
   } else {
-    console.log("Bench count exceeded")
+    if((this.state.positions.pitcher.inning[1].two === "") && (!fielders[this.state.fieldCount].player.pitcher) && (!fielders[this.state.fieldCount].player.short) && (!fielders[this.state.fieldCount].player.first) && (!fielders[this.state.fieldCount].player.second)){
+      const addPitcherF2 = update(this.state.positions, {pitcher: {inning: {[1]: {two: {$set: fielders[this.state.fieldCount].player.name}}}}})
+        const trackPitcherF2 = update(this.state.defense, {[this.state.index]: {player: {pitcher: {$set: true}}}})
+          this.setState(
+            {
+            positions: addPitcherF2,
+            defense: trackPitcherF2
+          },
+          this.generateSecondInning
+        )
+          this.state.fieldCount++
+    } 
+    // else if ((this.state.positions.shortStop.inning[1].two === "") && (!fielders[this.state.fieldCount].player.pitcher) && (!fielders[this.state.fieldCount].player.short) && (!fielders[this.state.fieldCount].player.first) && (!fielders[this.state.fieldCount].player.second)){
+    //   const addShortF2 = update(this.state.positions, {shortStop: {inning: {[1]: {two: {$set: fielders[this.state.fieldCount].player.name}}}}})
+    //     const trackShortF2 = update(this.state.defense, {[this.state.index]: {player: {short: {$set: true}}}})
+    //       this.setState(
+    //         {
+    //         positions: addShortF2,
+    //         defense: trackShortF2
+    //       },
+    //       this.generateSecondInning
+    //     )
+    //       this.state.fieldCount++
+
+    // } 
   }
   
   
 }
 
 logs = () => {
-
+   console.log("Positions: ")
    console.log(this.state.positions)
+   console.log("Defense: ")
+   console.log(this.state.defense)
 }
 
 
