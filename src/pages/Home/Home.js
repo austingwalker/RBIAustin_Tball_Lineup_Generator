@@ -35,23 +35,31 @@ class Home extends Component {
     inning: 1,
     html: "",
     index: -1,
-    counter: 0
+    counter: 0,
+    holder: []
   };
 
-  handleInputChange = event => {
+handleInputChange = event => {
     const { name, value } = event.target;
     this.setState({
       [name]: value
     });
-  };
+};
+// positions.first.inning[0].one
+// handleChange = (e) => {
+//     console.log(e)
+//     const name = e.currentTarget.title
+//     this.setState({[name]: e.target.value})
+// };
 
-  handleChange = (e) => {
-    console.log(e)
-    const name = e.currentTarget.title
-    this.setState({[name]: e.target.value})
-  }
+handleChange = (e) => {
+  console.log(e)
+  const name = e.currentTarget.title
+  const edit = update(this.state.positions, {[name]: {inning: {[0]: {one: {$set: e.target.value}}}}})
+  this.setState({positions: edit})
+};
 
-  handlePlayerChange = (e) => {
+handlePlayerChange = (e) => {
     const index = e.currentTarget.title
     const intIndex = parseInt(index, 10)
     const newArr = this.state.roster.team.map((p, i) => {
@@ -64,7 +72,7 @@ class Home extends Component {
     this.setState({
       roster: newObj
     })
-}
+};
 
 handleBattingOrderChange = (e) => {
   const index = e.currentTarget.title
@@ -79,97 +87,77 @@ handleBattingOrderChange = (e) => {
   this.setState({
     offense: newObj
   })
-}
+};
 
 handleBenchChange = (e) => {
   const index = e.currentTarget.title
   const intIndex = parseInt(index, 10)
-  const newArr = this.state.bench.kids.map((p, i) => {
+  const newArr = this.state.positions.bench.inning[0].one.map((p, i) => {
     if(i === intIndex){
       p = e.target.value
     }
    return p
   })
-  const newObj = update(this.state.bench, {kids: {$set: newArr}})
-  this.setState({
-    bench: newObj
-  })
-}
+  const edit = update(this.state.positions, {bench: {inning: {[0]: {one: {$set: newArr}}}}})
+  console.log(edit)
+   this.setState({
+     positions: edit
+   }
+ )
+};
 
-  enterName = event => {
+enterName = event => {
     event.preventDefault();
       this.setState({ 
        roster: {...this.state.roster, team: [...this.state.roster.team, this.state.player]},
         player: "",
       });
-      
-  };
+};
 
-  // generateLineup = event => {
-  //   event.preventDefault();
-  //   const kids = this.state.roster.team.slice()
-  //   const battingOrder = this.shuffle(kids)
-  //   let reverseOrder = battingOrder.slice()
-  //   reverseOrder = reverseOrder.reverse()
-  //   this.setState({
-  //     offense: {order: battingOrder},
-  //     defense: reverseOrder
-  //   })
-  //   this.assignPosition(reverseOrder)
-  // }
-
-  generateLineup = event => {
+generateLineup = event => {
     event.preventDefault();
     const kids = this.state.roster.team.slice()
     const battingOrder = this.shuffle(kids)
     let reverseOrder = battingOrder.slice()
     reverseOrder = reverseOrder.reverse()
+    const defense = reverseOrder.map(p => {
+      return {player: {name: p, first: false, second: false, short: false, pitcher: false}}
+    })
     // const defense = [Object.assign(...reverseOrder.map(([key]) => ({[key]: {first: false, second: false, short: false, pitcher: false}})))]
     this.setState({
       offense: {order: battingOrder},
-      defense: reverseOrder
+      defense: defense
     },
     this.assignPosition
-  
   )
-    
-    
-  }
+}
 
-  shuffle = (array) => {
-    let currentIndex = array.length, temporaryValue, randomIndex;
-  
-    while (0 !== currentIndex) {
-  
-      randomIndex = Math.floor(Math.random() * currentIndex);
-      currentIndex -= 1;
-  
-      temporaryValue = array[currentIndex];
-      array[currentIndex] = array[randomIndex];
-      array[randomIndex] = temporaryValue;
-    }
-  
-    return array;
+shuffle = (array) => {
+  let currentIndex = array.length, temporaryValue, randomIndex;
+  while (0 !== currentIndex) {
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
+    temporaryValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
   }
+  return array;
+}
 
-  assignPosition = () => {
-    // const size = Object.keys(obj).length;
-   
+assignPosition = () => {
     const size = this.state.defense.length
     
-    let holder = []
-
     if(this.state.counter < size){
+      this.state.counter++
       this.state.index++
       switch(this.state.index) {
         case 0:
         console.log("pitcher")
-        const addPitcher = update(this.state.positions, {pitcher: {inning: {[0]: {one: {$set: this.state.defense[this.state.index]}}}}})
+        const addPitcher = update(this.state.positions, {pitcher: {inning: {[0]: {one: {$set: this.state.defense[this.state.index].player.name}}}}})
         
           this.setState(
             {
-            positions: addPitcher,
-            counter: this.state.counter++
+            positions: addPitcher
             },
             this.assignPosition
           )
@@ -177,330 +165,104 @@ handleBenchChange = (e) => {
           break;
         case 1:
         console.log("short")
-        const addShort = update(this.state.positions, {shortStop: {inning: {[0]: {one: {$set: this.state.defense[this.state.index]}}}}})
-        console.log(addShort)
+        const addShort = update(this.state.positions, {shortStop: {inning: {[0]: {one: {$set: this.state.defense[this.state.index].player.name}}}}})
           this.setState({
-            positions: addShort,
-            counter: this.state.counter++
+            positions: addShort
           }, 
           this.assignPosition
         )
         break;
         case 2:
         console.log("third")
-        const addThird = update(this.state.positions, {third: {inning: {[0]: {one: {$set: this.state.defense[this.state.index]}}}}})
+        const addThird = update(this.state.positions, {third: {inning: {[0]: {one: {$set: this.state.defense[this.state.index].player.name}}}}})
           this.setState({
-            positions: addThird,
-            counter: this.state.counter++
+            positions: addThird
           }, 
           this.assignPosition
         )
         break;
         case 3:
         console.log("first")
-        const addFirst = update(this.state.positions, {first: {inning: {[0]: {one: {$set: this.state.defense[this.state.index]}}}}})
+        const addFirst = update(this.state.positions, {first: {inning: {[0]: {one: {$set: this.state.defense[this.state.index].player.name}}}}})
           this.setState({
-            positions: addFirst,
-            counter: this.state.counter++
+            positions: addFirst
           }, 
           this.assignPosition
         )
         break;
         case 4:
         console.log("second")
-        const addSecond = update(this.state.positions, {second: {inning: {[0]: {one: {$set: this.state.defense[this.state.index]}}}}})
+        const addSecond = update(this.state.positions, {second: {inning: {[0]: {one: {$set: this.state.defense[this.state.index].player.name}}}}})
           this.setState({
-            positions: addSecond,
-            counter: this.state.counter++
+            positions: addSecond
           }, 
           this.assignPosition
         )
         break;
         case 5:
         console.log("catcher")
-        const addCatcher = update(this.state.positions, {catcher: {inning: {[0]: {one: {$set: this.state.defense[this.state.index]}}}}})
+        const addCatcher = update(this.state.positions, {catcher: {inning: {[0]: {one: {$set: this.state.defense[this.state.index].player.name}}}}})
           this.setState({
-            positions: addCatcher,
-            counter: this.state.counter++
+            positions: addCatcher
           }, 
           this.assignPosition
         )
         break;
         case 6:
         console.log("LL")
-        const addLL = update(this.state.positions, {leftLeft: {inning: {[0]: {one: {$set: this.state.defense[this.state.index]}}}}})
+        const addLL = update(this.state.positions, {leftLeft: {inning: {[0]: {one: {$set: this.state.defense[this.state.index].player.name}}}}})
           this.setState({
-            positions: addLL,
-            counter: this.state.counter++
+            positions: addLL
           }, 
           this.assignPosition
         )
         break;
         case 7:
         console.log("LC")
-        const addLC = update(this.state.positions, {leftCenter: {inning: {[0]: {one: {$set: this.state.defense[this.state.index]}}}}})
+        const addLC = update(this.state.positions, {leftCenter: {inning: {[0]: {one: {$set: this.state.defense[this.state.index].player.name}}}}})
           this.setState({
-            positions: addLC,
-            counter: this.state.counter++
+            positions: addLC
           }, 
           this.assignPosition
         )
         break;
         case 8:
         console.log("RC")
-        const addRC = update(this.state.positions, {rightCenter: {inning: {[0]: {one: {$set: this.state.defense[this.state.index]}}}}})
+        const addRC = update(this.state.positions, {rightCenter: {inning: {[0]: {one: {$set: this.state.defense[this.state.index].player.name}}}}})
           this.setState({
-            positions: addRC,
-            counter: this.state.counter++
+            positions: addRC
           }, 
           this.assignPosition
         )
         break;
         case 9:
         console.log("RR")
-        const addRR = update(this.state.positions, {rightRight: {inning: {[0]: {one: {$set: this.state.defense[this.state.index]}}}}})
+        const addRR = update(this.state.positions, {rightRight: {inning: {[0]: {one: {$set: this.state.defense[this.state.index].player.name}}}}})
           this.setState({
-            positions: addRR,
-            counter: this.state.counter++
+            positions: addRR
           }, 
           this.assignPosition
         )
         break;
-        case 10:
-        console.log("bench")
-         holder.push(this.state.defense[this.state.index])
-         let addBench = update(this.state.positions, {bench: {inning: {[0]: {one: {$set: holder}}}}})
+       default:
+       console.log("bench")
+         this.state.holder.push(this.state.defense[this.state.index].player.name)
+        const addBench = update(this.state.positions, {bench: {inning: {[0]: {one: {$set: this.state.holder}}}}})
          this.setState({
-           positions: addBench,
-           counter: this.state.counter++
-         }, 
-         this.assignPosition
-       )
-       break;
-       case 11:
-        console.log("bench")
-         holder.push(this.state.defense[this.state.index])
-         addBench = update(this.state.positions, {bench: {inning: {[0]: {one: {$set: holder}}}}})
-         this.setState({
-           positions: addBench,
-           counter: this.state.counter++
-         }, 
-         this.assignPosition
-       )
-       break;
-       case 12:
-        console.log("bench")
-         holder.push(this.state.defense[this.state.index])
-         addBench = update(this.state.positions, {bench: {inning: {[0]: {one: {$set: holder}}}}})
-         this.setState({
-           positions: addBench,
-           counter: this.state.counter++
+           positions: addBench
          }, 
          this.assignPosition
        )
        break;
       }
-      
     } 
+  };
 
-    
-    // let index = 0
-    
-    //   let holder = []
-    //   for (let key in obj) {
-      // switch(index) {
-      //   case 0:
-      //   console.log("pitcher")
-      //   const addPitcher = update(this.state.positions, {pitcher: {inning: {[0]: {one: {$set: key}}}}})
-        
-      //     this.setState({
-      //       positions: addPitcher
-        
-      //     })
-      //     index++
-      //     break;
-      //   case 1:
-      //   console.log("short")
-      //   const addShort = update(this.state.positions, {shortStop: {inning: {[0]: {one: {$set: key}}}}})
-      //     this.setState({
-      //       positions: addShort
-      //     })
-      //     index++
-      //   break;
-      //   case 2:
-      //   console.log("third")
-      //   const addThird = update(this.state.positions, {third: {inning: {[0]: {one: {$set: key}}}}})
-      //     this.setState({
-      //       positions: addThird
-      //     })
-      //     index++
-      //   break;
-      //   case 3:
-      //   console.log("first")
-      //   const addFirst = update(this.state.positions, {first: {inning: {[0]: {one: {$set: key}}}}})
-      //     this.setState({
-      //       positions: addFirst
-      //     })
-      //     index++
-      //   break;
-      //   case 4:
-      //   console.log("second")
-      //   const addSecond = update(this.state.positions, {second: {inning: {[0]: {one: {$set: key}}}}})
-      //     this.setState({
-      //       positions: addSecond
-      //     })
-      //     index++
-      //   break;
-      //   case 5:
-      //   console.log("catcher")
-      //   const addCatcher = update(this.state.positions, {catcher: {inning: {[0]: {one: {$set: key}}}}})
-      //     this.setState({
-      //       positions: addCatcher
-      //     })
-      //     index++
-      //   break;
-      //   case 6:
-      //   console.log("LL")
-      //   const addLL = update(this.state.positions, {leftLeft: {inning: {[0]: {one: {$set: key}}}}})
-      //     this.setState({
-      //       positions: addLL
-      //     })
-      //     index++
-      //   break;
-      //   case 7:
-      //   console.log("LC")
-      //   const addLC = update(this.state.positions, {leftCenter: {inning: {[0]: {one: {$set: key}}}}})
-      //     this.setState({
-      //       positions: addLC
-      //     })
-      //     index++
-      //   break;
-      //   case 8:
-      //   console.log("RC")
-      //   const addRC = update(this.state.positions, {rightCenter: {inning: {[0]: {one: {$set: key}}}}})
-      //     this.setState({
-      //       positions: addRC
-      //     })
-      //     index++
-      //   break;
-      //   case 9:
-      //   console.log("RR")
-      //   const addRR = update(this.state.positions, {rightRight: {inning: {[0]: {one: {$set: key}}}}})
-      //     this.setState({
-      //       positions: addRR
-      //     })
-      //     index++
-      //   break;
-      //   default:
-      //   console.log("bench")
-      //    holder.push(key)
-      //    index++
-      // }
-    
-    // const newObj = update(this.state.positions.bench, {inning: {one: {$set: holder}}})
-    //   this.setState({
-    //     bench: newObj
-    //   })
-  // }
-
-  // positions: {...this.state.positions, pitcher: {...this.state.positions.pitcher, inning: {...this.state.positions.pitcher.inning, [0]: {...this.state.positions.pitcher.inning[0], one:key}}}}
-      
-    // let counter = 0
-    // let holder = []
-  
-    // arr.forEach((p, i, arr) => {
-    //   counter++
-    //   switch(counter) {
-    //     case 1:
-    //       this.setState({
-    //         pitcher: p
-    //       })
-    //       break;
-    //     case 2:
-    //       this.setState({
-    //         shortStop: p
-    //       })
-    //     break;
-    //     case 3:
-    //       this.setState({
-    //         third: p
-    //       })
-    //     break;
-    //     case 4:
-    //       this.setState({
-    //         first: p
-    //       })
-    //     break;
-    //     case 5:
-    //       this.setState({
-    //         second: p
-    //       })
-    //     break;
-    //     case 6:
-    //       this.setState({
-    //         catcher: p
-    //       })
-    //     break;
-    //     case 7:
-    //       this.setState({
-    //         leftLeft: p
-    //       })
-    //     break;
-    //     case 8:
-    //       this.setState({
-    //         leftCenter: p
-    //       })
-    //     break;
-    //     case 9:
-    //       this.setState({
-    //         rightCenter: p
-    //       })
-    //     break;
-    //     case 10:
-    //       this.setState({
-    //         rightRight: p
-    //       })
-    //     break;
-    //     default:
-    //      holder.push(p)
-    //   }
-    
-    // });
-    
-    
-  }
-
-  // updatePitcher = (key) => {
-  //   const addPitcher = update(this.state.positions, {pitcher: {inning: {[0]: {one: {$set: key}}}}})
-  //         this.setState({
-  //           positions: addPitcher
-  //         })
-  // }
-
-  // updateShort = (defense) => {
-  //   const addShort = update(this.state.positions, {shortStop: {inning: {[0]: {one: {$set: defense[this.state.index]}}}}})
-  //     this.setState({
-  //       positions: addShort,
-  //       counter: this.state.counter++,
-  //       index: this.state.index++
-  //     }, this.updateThird(defense))
-  // }
-
-  // updateThird = (defense) => {
-  //   const addThird = update(this.state.positions, {third: {inning: {[0]: {one: {$set: defense[this.state.index]}}}}})
-  //         this.setState({
-  //           positions: addThird,
-  //           counter: this.state.counter++,
-  //           index: this.state.index++
-  //         })
-  // }
-
-
-  logs = () => {
+logs = () => {
 
     console.log(this.state.positions)
     console.log(this.state.defense)
-  }
+}
 
 
   render() {
