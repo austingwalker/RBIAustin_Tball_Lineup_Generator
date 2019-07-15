@@ -36,7 +36,8 @@ class Home extends Component {
     html: "",
     index: -1,
     counter: 0,
-    holder: []
+    holder: [],
+    benchCount: 0
   };
 
 handleInputChange = event => {
@@ -45,15 +46,8 @@ handleInputChange = event => {
       [name]: value
     });
 };
-// positions.first.inning[0].one
-// handleChange = (e) => {
-//     console.log(e)
-//     const name = e.currentTarget.title
-//     this.setState({[name]: e.target.value})
-// };
 
 handleChange = (e) => {
-  console.log(e)
   const name = e.currentTarget.title
   const edit = update(this.state.positions, {[name]: {inning: {[0]: {one: {$set: e.target.value}}}}})
   this.setState({positions: edit})
@@ -121,7 +115,7 @@ generateLineup = event => {
     let reverseOrder = battingOrder.slice()
     reverseOrder = reverseOrder.reverse()
     const defense = reverseOrder.map(p => {
-      return {player: {name: p, first: false, second: false, short: false, pitcher: false}}
+      return {player: {name: p, first: false, second: false, short: false, pitcher: false, bench: false}}
     })
     // const defense = [Object.assign(...reverseOrder.map(([key]) => ({[key]: {first: false, second: false, short: false, pitcher: false}})))]
     this.setState({
@@ -146,14 +140,12 @@ shuffle = (array) => {
 
 assignPosition = () => {
     const size = this.state.defense.length
-    console.log(this.state.defense)
     
     if(this.state.counter < size){
       this.state.counter++
       this.state.index++
       switch(this.state.index) {
         case 0:
-        console.log("pitcher")
         const addPitcher = update(this.state.positions, {pitcher: {inning: {[0]: {one: {$set: this.state.defense[this.state.index].player.name}}}}})
         const trackPitcher = update(this.state.defense, {[this.state.index]: {player: {pitcher: {$set: true}}}})
         
@@ -167,7 +159,6 @@ assignPosition = () => {
           
           break;
         case 1:
-        console.log("short")
         const addShort = update(this.state.positions, {shortStop: {inning: {[0]: {one: {$set: this.state.defense[this.state.index].player.name}}}}})
         const trackShort = update(this.state.defense, {[this.state.index]: {player: {short: {$set: true}}}})
           this.setState({
@@ -178,7 +169,6 @@ assignPosition = () => {
         )
         break;
         case 2:
-        console.log("third")
         const addThird = update(this.state.positions, {third: {inning: {[0]: {one: {$set: this.state.defense[this.state.index].player.name}}}}})
           this.setState({
             positions: addThird
@@ -187,7 +177,6 @@ assignPosition = () => {
         )
         break;
         case 3:
-        console.log("first")
         const addFirst = update(this.state.positions, {first: {inning: {[0]: {one: {$set: this.state.defense[this.state.index].player.name}}}}})
         const trackFirst = update(this.state.defense, {[this.state.index]: {player: {first: {$set: true}}}})
           this.setState({
@@ -198,7 +187,6 @@ assignPosition = () => {
         )
         break;
         case 4:
-        console.log("second")
         const addSecond = update(this.state.positions, {second: {inning: {[0]: {one: {$set: this.state.defense[this.state.index].player.name}}}}})
         const trackSecond = update(this.state.defense, {[this.state.index]: {player: {second: {$set: true}}}})
           this.setState({
@@ -209,7 +197,6 @@ assignPosition = () => {
         )
         break;
         case 5:
-        console.log("catcher")
         const addCatcher = update(this.state.positions, {catcher: {inning: {[0]: {one: {$set: this.state.defense[this.state.index].player.name}}}}})
           this.setState({
             positions: addCatcher
@@ -218,7 +205,6 @@ assignPosition = () => {
         )
         break;
         case 6:
-        console.log("LL")
         const addLL = update(this.state.positions, {leftLeft: {inning: {[0]: {one: {$set: this.state.defense[this.state.index].player.name}}}}})
           this.setState({
             positions: addLL
@@ -227,7 +213,6 @@ assignPosition = () => {
         )
         break;
         case 7:
-        console.log("LC")
         const addLC = update(this.state.positions, {leftCenter: {inning: {[0]: {one: {$set: this.state.defense[this.state.index].player.name}}}}})
           this.setState({
             positions: addLC
@@ -236,7 +221,6 @@ assignPosition = () => {
         )
         break;
         case 8:
-        console.log("RC")
         const addRC = update(this.state.positions, {rightCenter: {inning: {[0]: {one: {$set: this.state.defense[this.state.index].player.name}}}}})
           this.setState({
             positions: addRC
@@ -245,7 +229,6 @@ assignPosition = () => {
         )
         break;
         case 9:
-        console.log("RR")
         const addRR = update(this.state.positions, {rightRight: {inning: {[0]: {one: {$set: this.state.defense[this.state.index].player.name}}}}})
           this.setState({
             positions: addRR
@@ -254,32 +237,106 @@ assignPosition = () => {
         )
         break;
        default:
-       console.log("bench")
          this.state.holder.push(this.state.defense[this.state.index].player.name)
         const addBench = update(this.state.positions, {bench: {inning: {[0]: {one: {$set: this.state.holder}}}}})
+        const trackBench = update(this.state.defense, {[this.state.index]: {player: {bench: {$set: true}}}})
          this.setState({
-           positions: addBench
+           positions: addBench,
+           defense: trackBench
          }, 
          this.assignPosition
        )
        break;
       }
-    } else {
-      this.generateSecondInning()
+    } 
+    else {
+      this.generateSecondInning();
     }
   };
 
 generateSecondInning = () => {
-  console.log("-----")
-  console.log("second inning!")
-  console.log(this.state.defense)
-  console.log("-----")
+  const sI = this.state.defense.slice()
+  const secondInning = this.shuffle(sI)
+  const top4 = secondInning.filter(p => {
+      return p.player.pitcher === true || p.player.short === true || p.player.first === true || p.player.second === true;
+  })
+  const bench = secondInning.filter(p => {
+    return p.player.bench === true;
+  })
+  const reg = secondInning.filter(p => {
+    if(!p.player.pitcher === true && !p.player.short === true && !p.player.first === true && !p.player.second === true && !p.player.bench === true){
+      return p
+    }
+  })
+  const nonBench = secondInning.filter(p => {
+    if(!p.player.bench === true){
+      return p
+    }
+  })
+
+  const benchLength = bench.length
+
+  if(benchLength > this.state.benchCount){
+    if(this.state.positions.pitcher.inning[1].two === ""){
+      const addPitcher2 = update(this.state.positions, {pitcher: {inning: {[1]: {two: {$set: bench[this.state.benchCount].player.name}}}}})
+        const trackPitcher2 = update(this.state.defense, {[this.state.index]: {player: {pitcher: {$set: true}}}})
+          this.setState(
+            {
+            positions: addPitcher2,
+            defense: trackPitcher2
+          },
+          this.generateSecondInning
+        )
+          this.state.benchCount++
+    } else if (this.state.positions.shortStop.inning[1].two === ""){
+        const addShort2 = update(this.state.positions, {shortStop: {inning: {[1]: {two: {$set: bench[this.state.benchCount].player.name}}}}})
+          const trackShort2 = update(this.state.defense, {[this.state.index]: {player: {short: {$set: true}}}})
+          
+            this.setState(
+              {
+              positions: addShort2,
+              defense: trackShort2
+            },
+            this.generateSecondInning
+          )
+            this.state.benchCount++
+    }
+    else if (this.state.positions.second.inning[1].two === ""){
+        const addThird2 = update(this.state.positions, {second: {inning: {[1]: {two: {$set: bench[this.state.benchCount].player.name}}}}})
+          const trackThird2 = update(this.state.defense, {[this.state.index]: {player: {second: {$set: true}}}})
+          
+            this.setState(
+              {
+              positions: addThird2,
+              defense: trackThird2
+            },
+            this.generateSecondInning
+          )
+            this.state.benchCount++
+    }
+    else if (this.state.positions.first.inning[1].two === ""){
+      const addFirst2 = update(this.state.positions, {first: {inning: {[1]: {two: {$set: bench[this.state.benchCount].player.name}}}}})
+      console.log(addFirst2)
+        const trackFirst2 = update(this.state.defense, {[this.state.index]: {player: {first: {$set: true}}}})
+          this.setState(
+            {
+            positions: addFirst2,
+            defense: trackFirst2
+          },
+          this.generateSecondInning
+        )
+          this.state.benchCount++
+  }
+  } else {
+    console.log("Bench count exceeded")
+  }
+  
+  
 }
 
 logs = () => {
 
-    console.log(this.state.positions)
-    console.log(this.state.defense)
+   console.log(this.state.positions)
 }
 
 
@@ -442,7 +499,7 @@ logs = () => {
                 inning:[{one: []}, {two: []}, {three: []}]
               } } */}
                 {this.state.positions.bench.inning[0].one.map((p, i)=> (
-                  <div className="benchBox">
+                  <div key={i} className="benchBox">
                    <ContentEditable
                    key={i}
                    title={i}
