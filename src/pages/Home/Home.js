@@ -146,6 +146,7 @@ shuffle = (array) => {
 
 assignPosition = () => {
     const size = this.state.defense.length
+    console.log(this.state.defense)
     
     if(this.state.counter < size){
       this.state.counter++
@@ -154,10 +155,12 @@ assignPosition = () => {
         case 0:
         console.log("pitcher")
         const addPitcher = update(this.state.positions, {pitcher: {inning: {[0]: {one: {$set: this.state.defense[this.state.index].player.name}}}}})
+        const trackPitcher = update(this.state.defense, {[this.state.index]: {player: {pitcher: {$set: true}}}})
         
           this.setState(
             {
-            positions: addPitcher
+            positions: addPitcher,
+            defense: trackPitcher
             },
             this.assignPosition
           )
@@ -166,8 +169,10 @@ assignPosition = () => {
         case 1:
         console.log("short")
         const addShort = update(this.state.positions, {shortStop: {inning: {[0]: {one: {$set: this.state.defense[this.state.index].player.name}}}}})
+        const trackShort = update(this.state.defense, {[this.state.index]: {player: {short: {$set: true}}}})
           this.setState({
-            positions: addShort
+            positions: addShort,
+            defense: trackShort
           }, 
           this.assignPosition
         )
@@ -184,8 +189,10 @@ assignPosition = () => {
         case 3:
         console.log("first")
         const addFirst = update(this.state.positions, {first: {inning: {[0]: {one: {$set: this.state.defense[this.state.index].player.name}}}}})
+        const trackFirst = update(this.state.defense, {[this.state.index]: {player: {first: {$set: true}}}})
           this.setState({
-            positions: addFirst
+            positions: addFirst,
+            defense: trackFirst
           }, 
           this.assignPosition
         )
@@ -193,8 +200,10 @@ assignPosition = () => {
         case 4:
         console.log("second")
         const addSecond = update(this.state.positions, {second: {inning: {[0]: {one: {$set: this.state.defense[this.state.index].player.name}}}}})
+        const trackSecond = update(this.state.defense, {[this.state.index]: {player: {second: {$set: true}}}})
           this.setState({
-            positions: addSecond
+            positions: addSecond,
+            defense: trackSecond
           }, 
           this.assignPosition
         )
@@ -255,8 +264,17 @@ assignPosition = () => {
        )
        break;
       }
-    } 
+    } else {
+      this.generateSecondInning()
+    }
   };
+
+generateSecondInning = () => {
+  console.log("-----")
+  console.log("second inning!")
+  console.log(this.state.defense)
+  console.log("-----")
+}
 
 logs = () => {
 
