@@ -17,6 +17,7 @@ class Home extends Component {
       order: []
     },
     defense: [],
+    defense2: [],
     positions: { 
     pitcher: {inning: [{one: ""}, {two: ""}, {three: ""}]},
     catcher: {inning: [{one: ""}, {two: ""}, {three: ""}]},
@@ -37,6 +38,7 @@ class Home extends Component {
     index: -1,
     counter: 0,
     holder: [],
+    holder2: [],
     benchCount: 0,
     fieldCount: 0,
   };
@@ -238,7 +240,7 @@ assignPosition = () => {
         )
         break;
        default:
-         this.state.holder.push(this.state.defense[this.state.index].player.name)
+        this.state.holder.push(this.state.defense[this.state.index].player.name)
         const addBench = update(this.state.positions, {bench: {inning: {[0]: {one: {$set: this.state.holder}}}}})
         const trackBench = update(this.state.defense, {[this.state.index]: {player: {bench: {$set: true}}}})
          this.setState({
@@ -251,33 +253,42 @@ assignPosition = () => {
       }
     } 
     else {
-      this.generateSecondInning();
+      this.secondInningD();
     }
   };
 
-generateSecondInning = () => {
+secondInningD = () => {
   const sI = this.state.defense.slice()
   const secondInning = this.shuffle(sI)
-  const top4 = secondInning.filter(p => {
-      return p.player.pitcher === true || p.player.short === true || p.player.first === true || p.player.second === true;
-  })
-  const bench = secondInning.filter(p => {
+  this.setState({
+    defense2: secondInning
+  }, 
+  this.generateSecondInning
+)
+}
+
+generateSecondInning = () => {
+  // const top4 = secondInning.filter(p => {
+  //     return p.player.pitcher === true || p.player.short === true || p.player.first === true || p.player.second === true;
+  // })
+  const bench = this.state.defense2.filter(p => {
     return p.player.bench === true;
   })
-  const reg = secondInning.filter(p => {
-    if(!p.player.pitcher === true && !p.player.short === true && !p.player.first === true && !p.player.second === true && !p.player.bench === true){
-      return p
-    }
-  })
-  const fielders = secondInning.filter(p => {
+  // const reg = secondInning.filter(p => {
+  //   if(!p.player.pitcher === true && !p.player.short === true && !p.player.first === true && !p.player.second === true && !p.player.bench === true){
+  //     return p
+  //   }
+  // })
+  const fielders = this.state.defense2.filter(p => {
     if(!p.player.bench === true){
       return p
     }
   })
-
   const benchLength = bench.length
-  const fieldersLength = fielders.length
-  console.log(fielders)
+  // const fieldersLength = fielders.length
+
+  //IF bench players exist run this
+  if(benchLength){
 
   if(benchLength > this.state.benchCount){
     if(this.state.positions.pitcher.inning[1].two === ""){
@@ -305,13 +316,13 @@ generateSecondInning = () => {
             this.state.benchCount++
     }
     else if (this.state.positions.second.inning[1].two === ""){
-        const addThird2 = update(this.state.positions, {second: {inning: {[1]: {two: {$set: bench[this.state.benchCount].player.name}}}}})
-          const trackThird2 = update(this.state.defense, {[this.state.index]: {player: {second: {$set: true}}}})
+        const addSecond2 = update(this.state.positions, {second: {inning: {[1]: {two: {$set: bench[this.state.benchCount].player.name}}}}})
+          const trackSecond2 = update(this.state.defense, {[this.state.index]: {player: {second: {$set: true}}}})
           
             this.setState(
               {
-              positions: addThird2,
-              defense: trackThird2
+              positions: addSecond2,
+              defense: trackSecond2
             },
             this.generateSecondInning
           )
@@ -331,6 +342,7 @@ generateSecondInning = () => {
           this.state.benchCount++
   }
   } else {
+    // Pitcher
     if((this.state.positions.pitcher.inning[1].two === "") && (!fielders[this.state.fieldCount].player.pitcher) && (!fielders[this.state.fieldCount].player.short) && (!fielders[this.state.fieldCount].player.first) && (!fielders[this.state.fieldCount].player.second)){
       const addPitcherF2 = update(this.state.positions, {pitcher: {inning: {[1]: {two: {$set: fielders[this.state.fieldCount].player.name}}}}})
         const trackPitcherF2 = update(this.state.defense, {[this.state.index]: {player: {pitcher: {$set: true}}}})
@@ -343,21 +355,259 @@ generateSecondInning = () => {
         )
           this.state.fieldCount++
     } 
-    // else if ((this.state.positions.shortStop.inning[1].two === "") && (!fielders[this.state.fieldCount].player.pitcher) && (!fielders[this.state.fieldCount].player.short) && (!fielders[this.state.fieldCount].player.first) && (!fielders[this.state.fieldCount].player.second)){
-    //   const addShortF2 = update(this.state.positions, {shortStop: {inning: {[1]: {two: {$set: fielders[this.state.fieldCount].player.name}}}}})
-    //     const trackShortF2 = update(this.state.defense, {[this.state.index]: {player: {short: {$set: true}}}})
-    //       this.setState(
-    //         {
-    //         positions: addShortF2,
-    //         defense: trackShortF2
-    //       },
-    //       this.generateSecondInning
-    //     )
-    //       this.state.fieldCount++
+    // Short
+    else if ((this.state.positions.shortStop.inning[1].two === "") && (!fielders[this.state.fieldCount].player.pitcher) && (!fielders[this.state.fieldCount].player.short) && (!fielders[this.state.fieldCount].player.first) && (!fielders[this.state.fieldCount].player.second)){
+      const addShortF2 = update(this.state.positions, {shortStop: {inning: {[1]: {two: {$set: fielders[this.state.fieldCount].player.name}}}}})
+        const trackShortF2 = update(this.state.defense, {[this.state.index]: {player: {short: {$set: true}}}})
+          this.setState(
+            {
+            positions: addShortF2,
+            defense: trackShortF2
+          },
+          this.generateSecondInning
+        )
+          this.state.fieldCount++
 
-    // } 
+    } 
+    // First
+    else if ((this.state.positions.first.inning[1].two === "") && (!fielders[this.state.fieldCount].player.pitcher) && (!fielders[this.state.fieldCount].player.short) && (!fielders[this.state.fieldCount].player.first) && (!fielders[this.state.fieldCount].player.second)){
+      const addFirstF2 = update(this.state.positions, {first: {inning: {[1]: {two: {$set: fielders[this.state.fieldCount].player.name}}}}})
+        const trackFirstF2 = update(this.state.defense, {[this.state.index]: {player: {first: {$set: true}}}})
+          this.setState(
+            {
+            positions: addFirstF2,
+            defense: trackFirstF2
+          },
+          this.generateSecondInning
+        )
+          this.state.fieldCount++
+    } 
+       // Second
+       else if ((this.state.positions.second.inning[1].two === "") && (!fielders[this.state.fieldCount].player.pitcher) && (!fielders[this.state.fieldCount].player.short) && (!fielders[this.state.fieldCount].player.first) && (!fielders[this.state.fieldCount].player.second)){
+        const addSecondF2 = update(this.state.positions, {second: {inning: {[1]: {two: {$set: fielders[this.state.fieldCount].player.name}}}}})
+          const trackSecondF2 = update(this.state.defense, {[this.state.index]: {player: {second: {$set: true}}}})
+            this.setState(
+              {
+              positions: addSecondF2,
+              defense: trackSecondF2
+            },
+            this.generateSecondInning
+          )
+            this.state.fieldCount++
+      } 
+      // Third
+      else if (this.state.positions.third.inning[1].two === ""){
+        const addThirdF2 = update(this.state.positions, {third: {inning: {[1]: {two: {$set: fielders[this.state.fieldCount].player.name}}}}})
+            this.setState(
+              {
+              positions: addThirdF2
+            },
+            this.generateSecondInning
+          )
+            this.state.fieldCount++
+      } 
+      // Catcher
+      else if (this.state.positions.catcher.inning[1].two === ""){
+        const addCatcherF2 = update(this.state.positions, {catcher: {inning: {[1]: {two: {$set: fielders[this.state.fieldCount].player.name}}}}})
+            this.setState(
+              {
+              positions: addCatcherF2
+            },
+            this.generateSecondInning
+          )
+            this.state.fieldCount++
+      } 
+      // LeftLeft
+      else if (this.state.positions.leftLeft.inning[1].two === ""){
+        const addleftLeftF2 = update(this.state.positions, {leftLeft: {inning: {[1]: {two: {$set: fielders[this.state.fieldCount].player.name}}}}})
+            this.setState(
+              {
+              positions: addleftLeftF2
+            },
+            this.generateSecondInning
+          )
+            this.state.fieldCount++
+      } 
+      // LeftCenter
+      else if (this.state.positions.leftCenter.inning[1].two === ""){
+        const addleftCenterF2 = update(this.state.positions, {leftCenter: {inning: {[1]: {two: {$set: fielders[this.state.fieldCount].player.name}}}}})
+            this.setState(
+              {
+              positions: addleftCenterF2
+            },
+            this.generateSecondInning
+          )
+            this.state.fieldCount++
+      } 
+      // rightCenter
+      else if (this.state.positions.rightCenter.inning[1].two === ""){
+        const addrightCenterF2 = update(this.state.positions, {rightCenter: {inning: {[1]: {two: {$set: fielders[this.state.fieldCount].player.name}}}}})
+            this.setState(
+              {
+              positions: addrightCenterF2
+            },
+            this.generateSecondInning
+          )
+            this.state.fieldCount++
+      } 
+      // rightRight
+      else if (this.state.positions.rightRight.inning[1].two === ""){
+        const addrightRightF2 = update(this.state.positions, {rightRight: {inning: {[1]: {two: {$set: fielders[this.state.fieldCount].player.name}}}}})
+            this.setState(
+              {
+              positions: addrightRightF2
+            },
+            this.generateSecondInning
+          )
+            this.state.fieldCount++
+      } 
+      else {
+        console.log("bench -----------------")
+        console.log(fielders[this.state.fieldCount])
+        if(!fielders[this.state.fieldCount]){
+          return
+        } else {
+        this.state.holder2.push(fielders[this.state.fieldCount].player.name)
+        const addBench2 = update(this.state.positions, {bench: {inning: {[1]: {two: {$set: this.state.holder2}}}}})
+        const trackBench2 = update(this.state.defense, {[this.state.index]: {player: {bench: {$set: true}}}})
+         this.setState({
+           positions: addBench2,
+           defense: trackBench2
+         }, 
+         this.generateSecondInning
+       )
+       this.state.fieldCount++
+      }
+    }
+
+
+
+
   }
+} else {
+
+  // Pitcher
+  if((this.state.positions.pitcher.inning[1].two === "") && (!fielders[this.state.fieldCount].player.pitcher) && (!fielders[this.state.fieldCount].player.short) && (!fielders[this.state.fieldCount].player.first) && (!fielders[this.state.fieldCount].player.second)){
+    const addPitcherNB2 = update(this.state.positions, {pitcher: {inning: {[1]: {two: {$set: fielders[this.state.fieldCount].player.name}}}}})
+      const trackPitcherNB2 = update(this.state.defense, {[this.state.index]: {player: {pitcher: {$set: true}}}})
+        this.setState(
+          {
+          positions: addPitcherNB2,
+          defense: trackPitcherNB2
+        },
+        this.generateSecondInning
+      )
+        this.state.fieldCount++
+  } 
+  // Short
+  else if ((this.state.positions.shortStop.inning[1].two === "") && (!fielders[this.state.fieldCount].player.pitcher) && (!fielders[this.state.fieldCount].player.short) && (!fielders[this.state.fieldCount].player.first) && (!fielders[this.state.fieldCount].player.second)){
+    const addShortNB2 = update(this.state.positions, {shortStop: {inning: {[1]: {two: {$set: fielders[this.state.fieldCount].player.name}}}}})
+      const trackShortNB2 = update(this.state.defense, {[this.state.index]: {player: {short: {$set: true}}}})
+        this.setState(
+          {
+          positions: addShortNB2,
+          defense: trackShortNB2
+        },
+        this.generateSecondInning
+      )
+        this.state.fieldCount++
+
+  } 
+  // First
+  else if ((this.state.positions.first.inning[1].two === "") && (!fielders[this.state.fieldCount].player.pitcher) && (!fielders[this.state.fieldCount].player.short) && (!fielders[this.state.fieldCount].player.first) && (!fielders[this.state.fieldCount].player.second)){
+    const addFirstNB2 = update(this.state.positions, {first: {inning: {[1]: {two: {$set: fielders[this.state.fieldCount].player.name}}}}})
+      const trackFirstNB2 = update(this.state.defense, {[this.state.index]: {player: {first: {$set: true}}}})
+        this.setState(
+          {
+          positions: addFirstNB2,
+          defense: trackFirstNB2
+        },
+        this.generateSecondInning
+      )
+        this.state.fieldCount++
+  } 
+     // Second
+     else if ((this.state.positions.second.inning[1].two === "") && (!fielders[this.state.fieldCount].player.pitcher) && (!fielders[this.state.fieldCount].player.short) && (!fielders[this.state.fieldCount].player.first) && (!fielders[this.state.fieldCount].player.second)){
+      const addSecondNB2 = update(this.state.positions, {second: {inning: {[1]: {two: {$set: fielders[this.state.fieldCount].player.name}}}}})
+        const trackSecondNB2 = update(this.state.defense, {[this.state.index]: {player: {second: {$set: true}}}})
+          this.setState(
+            {
+            positions: addSecondNB2,
+            defense: trackSecondNB2
+          },
+          this.generateSecondInning
+        )
+          this.state.fieldCount++
+    } 
+    // Third
+    else if (this.state.positions.third.inning[1].two === ""){
+      const addThirdNB2 = update(this.state.positions, {third: {inning: {[1]: {two: {$set: fielders[this.state.fieldCount].player.name}}}}})
+          this.setState(
+            {
+            positions: addThirdNB2
+          },
+          this.generateSecondInning
+        )
+          this.state.fieldCount++
+    } 
+    // Catcher
+    else if (this.state.positions.catcher.inning[1].two === ""){
+      const addCatcherNB2 = update(this.state.positions, {catcher: {inning: {[1]: {two: {$set: fielders[this.state.fieldCount].player.name}}}}})
+          this.setState(
+            {
+            positions: addCatcherNB2
+          },
+          this.generateSecondInning
+        )
+          this.state.fieldCount++
+    } 
+    // LeftLeft
+    else if (this.state.positions.leftLeft.inning[1].two === ""){
+      const addleftLeftNB2 = update(this.state.positions, {leftLeft: {inning: {[1]: {two: {$set: fielders[this.state.fieldCount].player.name}}}}})
+          this.setState(
+            {
+            positions: addleftLeftNB2
+          },
+          this.generateSecondInning
+        )
+          this.state.fieldCount++
+    } 
+    // LeftCenter
+    else if (this.state.positions.leftCenter.inning[1].two === ""){
+      const addleftCenterNB2 = update(this.state.positions, {leftCenter: {inning: {[1]: {two: {$set: fielders[this.state.fieldCount].player.name}}}}})
+          this.setState(
+            {
+            positions: addleftCenterNB2
+          },
+          this.generateSecondInning
+        )
+          this.state.fieldCount++
+    } 
+    // rightCenter
+    else if (this.state.positions.rightCenter.inning[1].two === ""){
+      const addrightCenterNB2 = update(this.state.positions, {rightCenter: {inning: {[1]: {two: {$set: fielders[this.state.fieldCount].player.name}}}}})
+          this.setState(
+            {
+            positions: addrightCenterNB2
+          },
+          this.generateSecondInning
+        )
+          this.state.fieldCount++
+    } 
+    // rightRight
+    else if (this.state.positions.rightRight.inning[1].two === ""){
+      const addrightRightNB2 = update(this.state.positions, {rightRight: {inning: {[1]: {two: {$set: fielders[this.state.fieldCount].player.name}}}}})
+          this.setState(
+            {
+            positions: addrightRightNB2
+          },
+          this.generateSecondInning
+        )
+          this.state.fieldCount++
+    } 
   
+  
+}
   
 }
 
