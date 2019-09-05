@@ -1,3 +1,7 @@
+#navComp {
+    width: 10px;;
+}
+
 .homeContainer {
     margin: auto;
     margin-top: 50px;
@@ -23,7 +27,7 @@
 
 .battingOrderRow {
     margin: auto;
-    margin-top: 10px;
+    /* margin-top: 10px; */
     margin-bottom: 10px;
     width: 100%;
     padding: 20px;
@@ -39,11 +43,16 @@
     border-radius: 5px;
 }
 
+/* .row {
+    padding: 5px;
+} */
+
 .players {
     color: white;
 }
 .order {
     color: black;
+    
 }
 
 .playerRowBox {
@@ -52,6 +61,28 @@
     float: left;
     width: 100px;
     padding: 5px;
+    text-align: center;
+
+}
+
+.benchOrderRow {
+    margin: auto;
+    width: 100%;
+    height: 100%;
+    /* padding: 20px;
+    padding-top: 10px; */
+    background: white;
+    border: 1px solid gray;
+    border-radius: 5px;
+}
+
+.benchRowBox {
+    background: white;
+    border-left: 1px solid gray;
+    border-right: 1px solid gray;
+    float: left;
+    width: 100px;
+    height: 100%;
     text-align: center;
 
 }
@@ -84,6 +115,10 @@
    /* Each position's Col */
 }
 
+#battingOrderTitle {
+    margin-left: 5px;
+}
+
 .title {
     margin-left: 25px;
 }
@@ -96,5 +131,8 @@
     float: left;
 }
 
+.row {
+    padding: 0;
+}
 
 
