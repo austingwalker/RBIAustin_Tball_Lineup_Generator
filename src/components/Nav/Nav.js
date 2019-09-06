@@ -5,7 +5,7 @@ import "./Nav.css"
 
 const Nav = (props) => (
  <div className="navBox">
-     <img className="leLogo" src={RBI_Header} alt="logo"/>
+     <img id="rbiLogo" src={RBI_Header} alt="logo"/>
   
 </div>
 );

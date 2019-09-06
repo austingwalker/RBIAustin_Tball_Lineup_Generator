@@ -1,5 +1,5 @@
 #navComp {
-    width: 10px;;
+    width: 100%;
 }
 
 .homeContainer {
@@ -43,9 +43,6 @@
     border-radius: 5px;
 }
 
-/* .row {
-    padding: 5px;
-} */
 
 .players {
     color: white;
@@ -55,42 +52,52 @@
     
 }
 
-.playerRowBox {
+.battingOrderBox{
     background: white;
     border: 1px solid gray;
     float: left;
-    width: 100px;
+    width: 10%;
+    /* width: 100px; */
     padding: 5px;
     text-align: center;
+}
 
+.row {
+    padding: 0;
+}
+
+.fieldingCol {
+    margin: auto;
+    width: 25%;
+    padding: 10px;
 }
 
 .benchOrderRow {
     margin: auto;
     width: 100%;
     height: 100%;
-    /* padding: 20px;
-    padding-top: 10px; */
+    padding: 20px;
     background: white;
     border: 1px solid gray;
     border-radius: 5px;
 }
 
-.benchRowBox {
-    background: white;
-    border-left: 1px solid gray;
-    border-right: 1px solid gray;
-    float: left;
-    width: 100px;
+.benchOrderSubRow {
+    margin: auto;
+    width: 100%;
     height: 100%;
-    text-align: center;
-
+    background: white;
+    padding: 10px;
+    border-radius: 5px;
 }
+
 
 .benchBox {
     background: white;
+    border: 1px solid gray;
     float: left;
-    width: 100px;
+    width: 10%;
+    /* width: 100px; */
     padding: 5px;
     text-align: center;
 }
@@ -131,8 +138,24 @@
     float: left;
 }
 
-.row {
-    padding: 0;
+@media screen and (max-width: 450px) {
+
+    .battingOrderBox{
+        background: white;
+        border: 1px solid gray;
+        float: left;
+        width: 25%;
+        /* width: 100px; */
+        padding: 5px;
+        text-align: center;
+    }
+
+    .fieldingCol {
+        width: 50%;
+    }
+    .benchBox {
+        width: 20%;
+
+  }
+
 }
-
-

@@ -160,7 +160,7 @@ handleBenchChange = (e) => {
             
               <Col className="battingOrderCol">
                   {this.state.offense.order.map((p, i)=> (
-                  <div className="playerRowBox" key={i}>
+                  <div className="battingOrderBox" key={i}>
                   <div>{`${i+1}. )`}</div>
                    <ContentEditable
                    key={i}
@@ -176,7 +176,7 @@ handleBenchChange = (e) => {
               <h5>Outfield</h5>
             </Row>
             <Row className="positionRow">
-            <Col>
+            <div className="fieldingCol">
               <h5 className="playerBox position" >Left</h5>
               {this.state.positions.left.inning.map((p, i) => (
               <ContentEditable
@@ -188,8 +188,8 @@ handleBenchChange = (e) => {
                 onChange={this.handlePositionChange}
               />
               ))}
-              </Col>
-              <Col>
+              </div>
+              <div className="fieldingCol">
               <h5 className="playerBox position" >Left Center</h5>
               {this.state.positions.leftCenter.inning.map((p, i) => (
               <ContentEditable
@@ -201,8 +201,8 @@ handleBenchChange = (e) => {
                 onChange={this.handlePositionChange}
               />
               ))}
-              </Col>
-              <Col>
+              </div>
+              <div className="fieldingCol">
               <h5 className="playerBox position" >Right Center</h5>
               {this.state.positions.rightCenter.inning.map((p, i) => (
               <ContentEditable
@@ -214,8 +214,8 @@ handleBenchChange = (e) => {
                 onChange={this.handlePositionChange}
               />
               ))}
-              </Col>
-              <Col>
+              </div>
+              <div className="fieldingCol">
               <h5 className="playerBox position" >Right</h5>
               {this.state.positions.right.inning.map((p, i) => (
               <ContentEditable
@@ -227,13 +227,13 @@ handleBenchChange = (e) => {
                 onChange={this.handlePositionChange}
               />
               ))}
-              </Col>
+              </div>
             </Row>
             <Row className="title">
               <h5>Infield</h5>
             </Row>
             <Row className="positionRow">
-            <Col>
+            <div className="fieldingCol">
               <h5 className="playerBox position" >Third</h5>
               {this.state.positions.third.inning.map((p, i) => (
               <ContentEditable
@@ -245,8 +245,8 @@ handleBenchChange = (e) => {
                 onChange={this.handlePositionChange}
               />
               ))}
-              </Col>
-              <Col>
+              </div>
+              <div className="fieldingCol">
               <h5 className="playerBox position" >Short</h5>
               {this.state.positions.shortStop.inning.map((p, i) => (
               <ContentEditable
@@ -258,8 +258,8 @@ handleBenchChange = (e) => {
                 onChange={this.handlePositionChange}
               />
               ))}
-              </Col>
-              <Col>
+              </div>
+              <div className="fieldingCol">
               <h5 className="playerBox position" >Second</h5>
               {this.state.positions.second.inning.map((p, i) => (
               <ContentEditable
@@ -271,8 +271,8 @@ handleBenchChange = (e) => {
                 onChange={this.handlePositionChange}
               />
               ))}
-              </Col>
-              <Col>
+              </div>
+              <div className="fieldingCol">
               <h5 className="playerBox position" >First</h5>
               {this.state.positions.first.inning.map((p, i) => (
               <ContentEditable
@@ -284,7 +284,7 @@ handleBenchChange = (e) => {
                 onChange={this.handlePositionChange}
               />
               ))}
-              </Col>
+              </div>
             </Row>
             <Row className="title">
               <h5>Pitcher / Catcher</h5>
@@ -320,10 +320,10 @@ handleBenchChange = (e) => {
             <Row className="title">
               <h5>Bench</h5>
             </Row>
-            <Row className="positionRow">
             <Row className="benchOrderRow">
+            <Row className="benchOrderSubRow">
                   {this.state.positions.bench.inning.one.map((p, i) => (
-                      <div className="benchRowBox" key={i}>
+                      <div className="benchBox" key={i}>
                        <ContentEditable
                        key={i}
                        id={i}
@@ -334,9 +334,9 @@ handleBenchChange = (e) => {
                        </div>
                   ))}
               </Row>
-              <Row className="benchOrderRow">
+              <Row className="benchOrderSubRow">
                   {this.state.positions.bench.inning.two.map((p, i) => (
-                      <div className="benchRowBox" key={i}>
+                      <div className="benchBox" key={i}>
                        <ContentEditable
                        key={i}
                        id={i}
@@ -347,9 +347,9 @@ handleBenchChange = (e) => {
                        </div>
                   ))}
               </Row>
-              <Row className="benchOrderRow">
+              <Row className="benchOrderSubRow">
                   {this.state.positions.bench.inning.three.map((p, i) => (
-                      <div className="benchRowBox" key={i}>
+                      <div className="benchBox" key={i}>
                        <ContentEditable
                        key={i}
                        id={i}
