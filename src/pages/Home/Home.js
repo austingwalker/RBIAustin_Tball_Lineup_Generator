@@ -157,11 +157,10 @@ handleBenchChange = (e) => {
               <h5 className="order">Batting Order</h5>
             </Row>
             <Row className="battingOrderRow">
-            
-              <Col className="battingOrderCol">
+              <Row className="battingOrderSubRow">
                   {this.state.offense.order.map((p, i)=> (
                   <div className="battingOrderBox" key={i}>
-                  <div>{`${i+1}. )`}</div>
+                  <div id="orderNum">{`${i+1}. )`}</div>
                    <ContentEditable
                    key={i}
                    title={i}
@@ -170,7 +169,7 @@ handleBenchChange = (e) => {
                    />
                    </div>
                   ))}
-              </Col>
+              </Row>
             </Row>
             <Row className="title">
               <h5>Outfield</h5>
@@ -286,7 +285,7 @@ handleBenchChange = (e) => {
               ))}
               </div>
             </Row>
-            <Row className="title">
+            <Row className="title pc">
               <h5>Pitcher / Catcher</h5>
             </Row>
             <Row className="positionRow">
@@ -317,7 +316,7 @@ handleBenchChange = (e) => {
               ))}
               </Col>
             </Row>
-            <Row className="title">
+            <Row className="title bench">
               <h5>Bench</h5>
             </Row>
             <Row className="benchOrderRow">

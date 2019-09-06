@@ -25,24 +25,34 @@
     
 }
 
+#battingOrderTitle {
+    margin: auto;
+    margin-left: 0;
+    margin-bottom: 15px;
+}
+
 .battingOrderRow {
     margin: auto;
-    /* margin-top: 10px; */
-    margin-bottom: 10px;
     width: 100%;
-    padding: 20px;
-}
+} 
 
-.battingOrderCol {
+.battingOrderSubRow {
     margin: auto;
     width: 100%;
-    height: 100%;
-    padding: 20px;
-    background: white;
-    border: 1px solid gray;
-    border-radius: 5px;
 }
 
+#orderNum {
+    text-align: left;
+}
+
+.battingOrderBox{
+    background: white;
+    border: 1px solid gray;
+    width: 10%;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    text-align: center;
+}
 
 .players {
     color: white;
@@ -52,53 +62,28 @@
     
 }
 
-.battingOrderBox{
-    background: white;
-    border: 1px solid gray;
-    float: left;
-    width: 10%;
-    /* width: 100px; */
-    padding: 5px;
-    text-align: center;
-}
-
-.row {
-    padding: 0;
-}
-
 .fieldingCol {
     margin: auto;
     width: 25%;
     padding: 10px;
 }
 
-.benchOrderRow {
-    margin: auto;
-    width: 100%;
-    height: 100%;
-    padding: 20px;
-    background: white;
-    border: 1px solid gray;
-    border-radius: 5px;
-}
-
 .benchOrderSubRow {
     margin: auto;
     width: 100%;
     height: 100%;
-    background: white;
     padding: 10px;
-    border-radius: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
 }
 
 
 .benchBox {
     background: white;
     border: 1px solid gray;
-    float: left;
     width: 10%;
-    /* width: 100px; */
-    padding: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
     text-align: center;
 }
 
@@ -118,35 +103,31 @@
     text-align: center;
 }
 
-.positionBox {
-   /* Each position's Col */
-}
-
-#battingOrderTitle {
-    margin-left: 5px;
-}
-
 .title {
+    margin-top: 20px;
     margin-left: 25px;
+}
+
+.bench {
+    margin-left: 0;
+}
+
+.pc {
+    margin-bottom: 10px;
 }
 
 .position{
     font-size: 16px;
 }
 
-.benchBox {
-    float: left;
-}
 
 @media screen and (max-width: 450px) {
 
     .battingOrderBox{
         background: white;
         border: 1px solid gray;
-        float: left;
         width: 25%;
-        /* width: 100px; */
-        padding: 5px;
+        padding: 1px;
         text-align: center;
     }
 
@@ -154,6 +135,7 @@
         width: 50%;
     }
     .benchBox {
+
         width: 20%;
 
   }
