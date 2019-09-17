@@ -10,8 +10,6 @@ import "./Home.css"
 
 class Home extends Component {
   state = {
-    test: [],
-    test2: ["test"],
     player: "",
     roster: [],
     offense: ["","","","","","","","","","","","","","","","","","","",""],
@@ -19,18 +17,17 @@ class Home extends Component {
     index: -1,
     counter: 0,
     inning: 0,
-    holder: [],
     positions: { 
-      pitcher: ["", "", ""],
-      catcher: ["", "", ""],
-      first: ["", "", ""],
-      second: ["", "", ""],
-      shortStop: ["", "", ""],
-      third: ["", "", ""],
-      right: ["", "", ""],
-      rightCenter: ["", "", ""],
-      leftCenter: ["", "", ""],
-      left: ["", "", ""],
+      pitcher: ["", "", "", ""],
+      catcher: ["", "", "", ""],
+      first: ["", "", "", ""],
+      second: ["", "", "", ""],
+      shortStop: ["", "", "", ""],
+      third: ["", "", "", ""],
+      right: ["", "", "", ""],
+      rightCenter: ["", "", "", ""],
+      leftCenter: ["", "", "", ""],
+      left: ["", "", "", ""],
       bench: {
           one: ["", "", "", "", "", "", "", "", "", ""],
           two: ["", "", "", "", "", "", "", "", "", ""],
@@ -40,6 +37,7 @@ class Home extends Component {
     },
   };
 
+//Handles state change for new players being added
 handleInputChange = event => {
     const { name, value } = event.target;
     this.setState({
@@ -47,6 +45,7 @@ handleInputChange = event => {
     });
 };
 
+//Handles state change for already added players
 enterName = e => {
   e.preventDefault();
     this.setState({ 
@@ -55,6 +54,7 @@ enterName = e => {
     });
 };
 
+//Takes in the roster and sets the batting order and defense
 generateLineup = event => {
   event.preventDefault();
   const kids = this.state.roster.slice()
@@ -68,6 +68,7 @@ generateLineup = event => {
   this.setDefense()
 }
 
+//Randomly shuffles the roster to generate a batting order and defense
 shuffle = (array) => {
   let currentIndex = array.length, temporaryValue, randomIndex;
   while (0 !== currentIndex) {
@@ -80,8 +81,10 @@ shuffle = (array) => {
   return array;
 }
 
+//Sets the defense array order for the positions to be generated from
 setDefense = () => {
-    if(this.state.roster.length <= 7 && this.state.inning < 4){
+  // Runs if there are 7 or less players
+  if(this.state.roster.length <= 7 && this.state.inning < 4){
       
         if(this.state.inning === 0){
         const players = this.state.roster.slice()
@@ -98,6 +101,7 @@ setDefense = () => {
       }, this.assignDefenseSevenAndUnder)
     }
   }
+  // Runs if there are 8 or 9 players
   else if((this.state.roster.length === 9 || this.state.roster.length === 8) && this.state.inning < 4){
       if(this.state.inning === 0){
       const players = this.state.roster.slice()
@@ -113,7 +117,9 @@ setDefense = () => {
       defense: defense
     }, this.assignDefenseEightOrNine)
   }
-  } else {
+  } 
+  // Runs if there are 10-20 players
+  else {
 
   if(this.state.inning === 0){
     const players = this.state.roster.slice()
@@ -122,6 +128,7 @@ setDefense = () => {
     this.setState({
       defense: defense
   }, this.assignDefense)
+  // Runs if there are 10-15 players
   } else if (this.state.inning > 0 && this.state.inning < 4){
     let defense = this.state.defense
     let newBench = []
@@ -129,9 +136,8 @@ setDefense = () => {
     let counter2 = 1
     const dif = defense.length - 10
     let bench = defense.splice(10, dif)
-
+    // Runs if there are 16-20 players
     if(dif >= 6){
-
       for (let i = 0; i < dif; i++){
         if(i >= 5){
           newBench.push(defense[counter2])
@@ -149,10 +155,6 @@ setDefense = () => {
       this.setState({
         defense: defense
       }, this.assignDefense)
-      
-
-
-
     } else {
     for (let i = 0; i < dif; i++){
       newBench.push(defense[i + counter])
@@ -234,8 +236,7 @@ setDefense = () => {
  }
 }
 
-
-
+//Sets the defense for 10-20 players
 assignDefense = () => {
   let setOrPush;
       if(this.state.inning === 0){
@@ -347,6 +348,7 @@ assignDefense = () => {
 
 }
 
+//Sets the defense for 8 or 9 players
 assignDefenseEightOrNine = () => {
   let setOrPush;
   if(this.state.inning === 0){
@@ -430,6 +432,7 @@ switch(this.state.index) {
     }
 }
 
+//Sets the defense for 7 or less players
 assignDefenseSevenAndUnder = () => {
   let setOrPush;
   if(this.state.inning === 0){
@@ -501,7 +504,7 @@ switch(this.state.index) {
     }
 }
 
-
+//Handles state change for the batting order
 handleBattingOrderChange = (e) => {
   const index = e.currentTarget.title
   const intIndex = parseInt(index, 10)
@@ -517,6 +520,7 @@ handleBattingOrderChange = (e) => {
   })
 };
 
+//Handles state change for the positions
 handlePositionChange = (e) => {
   const title = e.currentTarget.title
   const index = e.currentTarget.id
@@ -533,6 +537,7 @@ handlePositionChange = (e) => {
   })
 };
 
+//Handles state change for the bench
 handleBenchChange = (e) => {
   const title = e.currentTarget.title
   const index = e.currentTarget.id
