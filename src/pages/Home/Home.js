@@ -81,7 +81,6 @@ shuffle = (array) => {
 }
 
 setDefense = () => {
-  console.log(this.state.roster.length)
     if(this.state.roster.length <= 7 && this.state.inning < 4){
       
         if(this.state.inning === 0){
@@ -123,15 +122,38 @@ setDefense = () => {
     this.setState({
       defense: defense
   }, this.assignDefense)
-  } else if (this.state.inning === 1){
+  } else if (this.state.inning > 0 && this.state.inning < 4){
     let defense = this.state.defense
-    
     let newBench = []
     let counter = 0
+    let counter2 = 1
     const dif = defense.length - 10
-
     let bench = defense.splice(10, dif)
 
+    if(dif >= 6){
+
+      for (let i = 0; i < dif; i++){
+        if(i >= 5){
+          newBench.push(defense[counter2])
+          defense.splice(counter2, 1, bench[i])
+          counter2 = counter2 + 2
+        } else {
+
+        newBench.push(defense[i + counter])
+        defense.splice(i + counter, 1, bench[i])
+        counter = counter + 1
+        }
+      }
+      const lastE = defense.pop()
+      defense = [lastE, ...defense, ...newBench]
+      this.setState({
+        defense: defense
+      }, this.assignDefense)
+      
+
+
+
+    } else {
     for (let i = 0; i < dif; i++){
       newBench.push(defense[i + counter])
       defense.splice(i + counter, 1, bench[i])
@@ -142,45 +164,73 @@ setDefense = () => {
     this.setState({
       defense: defense
     }, this.assignDefense)
-  } else if (this.state.inning === 2){
-    let defense = this.state.defense
-    
-    let newBench = []
-    let counter = 0
-    const dif = defense.length - 10
-
-    let bench = defense.splice(10, dif)
-
-    for (let i = 0; i < dif; i++){
-      newBench.push(defense[i + counter])
-      defense.splice(i + counter, 1, bench[i])
-      counter = counter + 1
     }
-    const lastE = defense.pop()
-    defense = [lastE, ...defense, ...newBench]
-    this.setState({
-      defense: defense
-    }, this.assignDefense)
-  } else if (this.state.inning === 3){
-    let defense = this.state.defense
+  } 
+
+
+
+  // else if (this.state.inning === 1){
+  //   let defense = this.state.defense
     
-    let newBench = []
-    let counter = 0
-    const dif = defense.length - 10
+  //   let newBench = []
+  //   let counter = 0
+  //   const dif = defense.length - 10
 
-    let bench = defense.splice(10, dif)
+  //   let bench = defense.splice(10, dif)
 
-    for (let i = 0; i < dif; i++){
-      newBench.push(defense[i + counter])
-      defense.splice(i + counter, 1, bench[i])
-      counter = counter + 1
-    }
-    const lastE = defense.pop()
-    defense = [lastE, ...defense, ...newBench]
-    this.setState({
-      defense: defense
-    }, this.assignDefense)
-  }
+  //   for (let i = 0; i < dif; i++){
+  //     newBench.push(defense[i + counter])
+  //     defense.splice(i + counter, 1, bench[i])
+  //     counter = counter + 1
+  //   }
+  //   const lastE = defense.pop()
+  //   defense = [lastE, ...defense, ...newBench]
+  //   this.setState({
+  //     defense: defense
+  //   }, this.assignDefense)
+  // } 
+  
+  // else if (this.state.inning === 2){
+  //   let defense = this.state.defense
+    
+  //   let newBench = []
+  //   let counter = 0
+  //   const dif = defense.length - 10
+
+  //   let bench = defense.splice(10, dif)
+
+  //   for (let i = 0; i < dif; i++){
+  //     newBench.push(defense[i + counter])
+  //     defense.splice(i + counter, 1, bench[i])
+  //     counter = counter + 1
+  //   }
+  //   const lastE = defense.pop()
+  //   defense = [lastE, ...defense, ...newBench]
+  //   this.setState({
+  //     defense: defense
+  //   }, this.assignDefense)
+  // } 
+  
+  // else if (this.state.inning === 3){
+  //   let defense = this.state.defense
+    
+  //   let newBench = []
+  //   let counter = 0
+  //   const dif = defense.length - 10
+
+  //   let bench = defense.splice(10, dif)
+
+  //   for (let i = 0; i < dif; i++){
+  //     newBench.push(defense[i + counter])
+  //     defense.splice(i + counter, 1, bench[i])
+  //     counter = counter + 1
+  //   }
+  //   const lastE = defense.pop()
+  //   defense = [lastE, ...defense, ...newBench]
+  //   this.setState({
+  //     defense: defense
+  //   }, this.assignDefense)
+  // }
  }
 }
 
