@@ -2,7 +2,7 @@
   "name": "mern",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://austingwalker.github.io/RBIAustin_Tball_Lineup_Generator",
+  "homepage": "https://austingwalker.github.io",
   "dependencies": {
     "axios": "^0.16.2",
     "gh-pages": "^2.0.1",
