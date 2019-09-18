@@ -1,6 +1,4 @@
-#navComp {
-    width: 100%;
-}
+
 
 .homeContainer {
     margin: auto;
@@ -8,67 +6,16 @@
     margin-bottom: 50px;
 }
 
-.generateBtn {
-    float: right;
-    background: black;
-    width: 25%;
+/* #namesCol {
+    padding-right: 0px;
 }
 
-.rosterBox {
-    margin: auto;
-    margin-right: 30px;
-    width: 100%;
-    height: 100%;
-    padding: 20px;
-    background: green;
-    border-radius: 5px;
-    
-}
+#rosterCol {
+    padding-left: 0px;
+} */
 
-.playerRowBox {
-    background: white;
-    display: inline-flex;
-    padding: 10px;
-    width: 20%;
-    border: 1px solid gray;
-    text-align: center;
-}
-
-#battingOrderTitle {
-    margin: auto;
-    margin-left: 0;
-    margin-bottom: 15px;
-}
-
-.battingOrderRow {
-    margin: auto;
-    width: 100%;
-} 
-
-.battingOrderSubRow {
-    margin: auto;
-    width: 100%;
-}
-
-#orderNum {
-    text-align: left;
-}
-
-.battingOrderBox{
-    background: white;
-    border: 1px solid gray;
-    width: 10%;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    text-align: center;
-}
-
-.players {
-    color: white;
-}
-.order {
-    color: black;
-    
+#nrCol{
+    padding: 0px;
 }
 
 .fieldingCol {
@@ -121,16 +68,20 @@
     margin-left: 0;
 }
 
-.pc {
-    margin-bottom: 10px;
-}
 
 .position{
     font-size: 16px;
 }
 
 
+
 @media screen and (max-width: 450px) {
+
+
+    .rosterBox {
+        margin-right: 0px;
+        padding: 20px;
+    }
 
     .battingOrderBox{
         background: white;

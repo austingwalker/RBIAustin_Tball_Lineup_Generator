@@ -1,0 +1,38 @@
+#battingBox {
+    width: 100%;
+    padding: 20px;
+}
+
+#battingOrderTitle {
+    margin: auto;
+    margin-left: 0;
+    margin-bottom: 15px;
+}
+
+.battingOrderRow {
+    margin: auto;
+    width: 100%;
+} 
+
+.battingOrderSubRow {
+    margin: auto;
+    width: 100%;
+}
+
+#orderNum {
+    text-align: left;
+}
+
+.battingOrderBox{
+    background: white;
+    border: 1px solid gray;
+    width: 10%;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    text-align: center;
+}
+
+.order {
+    color: black;
+}
+

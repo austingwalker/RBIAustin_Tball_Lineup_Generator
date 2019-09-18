@@ -1,0 +1,20 @@
+#rosterBox {
+    border: 1px solid black;
+    height: 100%;
+    background: white;
+    padding: 20px;
+}
+
+.playerRowBox {
+    background: white;
+    display: inline-flex;
+    padding: 10px;
+    width: 20%;
+    border: 1px solid gray;
+    text-align: center;
+}
+
+#roster {
+    color: black;
+    padding: 10px;
+}

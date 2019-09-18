@@ -1,12 +1,15 @@
 import React, { Component } from "react";
 // import API from "../../utils/API";
 import { Container, Row, Col } from 'reactstrap';
-import ContentEditable from 'react-contenteditable'
 import update from 'immutability-helper';
 import Names from "../../components/Names";
-import Nav from "../../components/Nav";
+import Roster from "../../components/Roster";
+import Batting from "../../components/Batting";
+import Outfield from "../../components/Outfield";
+import Infield from "../../components/Infield";
+import PitcherCatcher from "../../components/PitcherCatcher";
+import Bench from "../../components/Bench";
 import "./Home.css"
-
 
 class Home extends Component {
   state = {
@@ -549,252 +552,60 @@ handleBenchChange = (e) => {
   render() {
     return (
       <div>
-      <Nav id="navComp"/>
       <Container className="homeContainer" fluid>
         <Row>
-          <Col>
+          <Col id="namesCol">
             <Names 
             player={this.state.player}
             handleInputChange={this.handleInputChange} 
             enterName={this.enterName}
+            generateLineup={this.generateLineup}
             />
-            <button type="submit" className="btn btn-secondary generateBtn" onClick={this.generateLineup}>Generate Lineup</button>
-            </Col>
-            <Col className="rosterBox">
-            <div >
-              <h5 className="players">Players</h5>
-              {this.state.roster.map((p, i)=> (
-                   <ContentEditable
-                   key={i}
-                   className="playerRowBox"
-                   title={i}
-                   html={this.state.roster[i]}
-                   onChange={this.handlePlayerChange}
-                   />
-                  ))}
-            </div>
-            </Col>
-            </Row>
-            <Row id="battingOrderTitle">
-              <h5 className="order">Batting Order</h5>
-            </Row>
-            <Row className="battingOrderRow">
-              <Row className="battingOrderSubRow">
-                  {this.state.offense.map((p, i)=> (
-                  <div className="battingOrderBox" key={i}>
-                  <div id="orderNum">{`${i+1}. )`}</div>
-                   <ContentEditable
-                   key={i}
-                   title={i}
-                   html={this.state.offense[i]}
-                   onChange={this.handleBattingOrderChange}
-                   />
-                   </div>
-                  ))}
-              </Row>
-            </Row>
-            <Row className="title">
-              <h5>Outfield</h5>
-            </Row>
-            <Row className="positionRow">
-            <div className="fieldingCol">
-              <h5 className="playerBox position" >Left</h5>
-              {this.state.positions.left.map((p, i) => (
-              <ContentEditable
-                key={i}
-                id={i}
-                className="playerBox position"
-                title="left"
-                html={this.state.positions.left[i]}
-                onChange={this.handlePositionChange}
-              />
-              ))}
-              </div>
-              <div className="fieldingCol">
-              <h5 className="playerBox position" >Left Center</h5>
-              {this.state.positions.leftCenter.map((p, i) => (
-              <ContentEditable
-                key={i}
-                id={i}
-                className="playerBox position"
-                title="leftCenter"
-                html={this.state.positions.leftCenter[i]}
-                onChange={this.handlePositionChange}
-              />
-              ))}
-              </div>
-              <div className="fieldingCol">
-              <h5 className="playerBox position" >Right Center</h5>
-              {this.state.positions.rightCenter.map((p, i) => (
-              <ContentEditable
-                key={i}
-                id={i}
-                className="playerBox position"
-                title="rightCenter"
-                html={this.state.positions.rightCenter[i]}
-                onChange={this.handlePositionChange}
-              />
-              ))}
-              </div>
-              <div className="fieldingCol">
-              <h5 className="playerBox position" >Right</h5>
-              {this.state.positions.right.map((p, i) => (
-              <ContentEditable
-                key={i}
-                id={i}
-                className="playerBox position"
-                title="right"
-                html={this.state.positions.right[i]}
-                onChange={this.handlePositionChange}
-              />
-              ))}
-              </div>
-            </Row>
-            <Row className="title">
-              <h5>Infield</h5>
-            </Row>
-            <Row className="positionRow">
-            <div className="fieldingCol">
-              <h5 className="playerBox position" >Third</h5>
-              {this.state.positions.third.map((p, i) => (
-              <ContentEditable
-                key={i}
-                id={i}
-                className="playerBox position"
-                title="third"
-                html={this.state.positions.third[i]}
-                onChange={this.handlePositionChange}
-              />
-              ))}
-              </div>
-              <div className="fieldingCol">
-              <h5 className="playerBox position" >Short</h5>
-              {this.state.positions.shortStop.map((p, i) => (
-              <ContentEditable
-                key={i}
-                id={i}
-                className="playerBox position"
-                title="shortStop"
-                html={this.state.positions.shortStop[i]}
-                onChange={this.handlePositionChange}
-              />
-              ))}
-              </div>
-              <div className="fieldingCol">
-              <h5 className="playerBox position" >Second</h5>
-              {this.state.positions.second.map((p, i) => (
-              <ContentEditable
-                key={i}
-                id={i}
-                className="playerBox position"
-                title="second"
-                html={this.state.positions.second[i]}
-                onChange={this.handlePositionChange}
-              />
-              ))}
-              </div>
-              <div className="fieldingCol">
-              <h5 className="playerBox position" >First</h5>
-              {this.state.positions.first.map((p, i) => (
-              <ContentEditable
-                key={i}
-                id={i}
-                className="playerBox position"
-                title="first"
-                html={this.state.positions.first[i]}
-                onChange={this.handlePositionChange}
-              />
-              ))}
-              </div>
-            </Row>
-            <Row className="title pc">
-              <h5>Pitcher / Catcher</h5>
-            </Row>
-            <Row className="positionRow">
-            <Col>
-              <h5 className="playerBox position" >Pitcher</h5>
-              {this.state.positions.pitcher.map((p, i) => (
-              <ContentEditable
-                key={i}
-                id={i}
-                className="playerBox position"
-                title="pitcher"
-                html={this.state.positions.pitcher[i]}
-                onChange={this.handlePositionChange}
-              />
-              ))}
-              </Col>
-              <Col>
-              <h5 className="playerBox position" >Catcher</h5>
-              {this.state.positions.catcher.map((p, i) => (
-              <ContentEditable
-                key={i}
-                id={i}
-                className="playerBox position"
-                title="catcher"
-                html={this.state.positions.catcher[i]}
-                onChange={this.handlePositionChange}
-              />
-              ))}
-              </Col>
-            </Row>
-            <Row className="title bench">
-              <h5>Bench</h5>
-            </Row>
-            <Row className="benchOrderRow">
-            <Row className="benchOrderSubRow">
-                  {this.state.positions.bench.one.map((p, i) => (
-                      <div className="benchBox" key={i}>
-                       <ContentEditable
-                       key={i}
-                       id={i}
-                       title="one"
-                       html={this.state.positions.bench.one[i]}
-                       onChange={this.handleBenchChange}
-                       />
-                       </div>
-                  ))}
-              </Row>
-              <Row className="benchOrderSubRow">
-                  {this.state.positions.bench.two.map((p, i) => (
-                      <div className="benchBox" key={i}>
-                       <ContentEditable
-                       key={i}
-                       id={i}
-                       title="two"
-                       html={this.state.positions.bench.two[i]}
-                       onChange={this.handleBenchChange}
-                       />
-                       </div>
-                  ))}
-              </Row>
-              <Row className="benchOrderSubRow">
-                  {this.state.positions.bench.three.map((p, i) => (
-                      <div className="benchBox" key={i}>
-                       <ContentEditable
-                       key={i}
-                       id={i}
-                       title="three"
-                       html={this.state.positions.bench.three[i]}
-                       onChange={this.handleBenchChange}
-                       />
-                       </div>
-                  ))}
-              </Row>
-              <Row className="benchOrderSubRow">
-                  {this.state.positions.bench.four.map((p, i) => (
-                      <div className="benchBox" key={i}>
-                       <ContentEditable
-                       key={i}
-                       id={i}
-                       title="three"
-                       html={this.state.positions.bench.four[i]}
-                       onChange={this.handleBenchChange}
-                       />
-                       </div>
-                  ))}
-              </Row>
-            </Row>
+          </Col>
+          <Col md="1" id="nrCol"></Col>
+          <Col id="rosterCol">
+            <Roster
+            roster={this.state.roster}
+            handlePlayerChange={this.handlePlayerChange}
+            />
+          </Col>
+        </Row>
+
+        <Row>
+          <Batting
+          offense={this.state.offense}
+          handleBattingOrderChange={this.handleBattingOrderChange}
+          />
+        </Row>
+
+        <Row>
+          <Outfield
+          positions={this.state.positions}
+          handlePositionChange={this.handlePositionChange}
+          />
+        </Row>
+
+        <Row>
+          <Infield
+          positions={this.state.positions}
+          handlePositionChange={this.handlePositionChange}
+          />
+        </Row>
+
+        <Row>
+          <PitcherCatcher
+          positions={this.state.positions}
+          handlePositionChange={this.handlePositionChange}
+          />
+        </Row>
+
+        <Row>
+          <Bench
+          positions={this.state.positions}
+          handleBenchChange={this.handleBenchChange}
+          />
+        </Row>
+          
       </Container>
       </div>
     );

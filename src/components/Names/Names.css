@@ -4,13 +4,8 @@
     align-items: stretch;
 }
 
-#sidebar {
-    min-width: 250px;
-    max-width: 250px;
-}
-
-#sidebar.active {
-    margin-left: -250px;
+#namesDiv{
+    padding: 20px;
 }
 
 .nameBox {
@@ -18,13 +13,47 @@
 }
 
 .nameInput {
-    width: 70%;
-    float: left;
+    width: 100%;
 }
 
 .nameBtn {
-    width: 25%;
-    float: right;
+    margin: auto;
+    width: 45%;
+    /* float: right; */
     background: red;
 }
+
+.generateBtn {
+    margin: auto;
+    float: right;
+    background: black;
+    width: 45%;
+}
+
+/* #glBtn{
+   
+} */
+
+@media screen and (max-width: 450px) {
+
+    #namesDiv{
+        margin-bottom: 20px;
+    }
+    .nameInput {
+        width: 100%;
+    }
+
+    .nameBtn {
+        width: 45%;
+        float: none;
+    }
+
+    .generateBtn {
+        float: right;
+        width: 45%;
+    }
+
+    
+
+  }
 
