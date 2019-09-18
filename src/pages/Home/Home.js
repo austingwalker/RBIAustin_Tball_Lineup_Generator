@@ -45,7 +45,7 @@ handleInputChange = event => {
     });
 };
 
-//Handles state change for already added players
+//Adds player to the roster
 enterName = e => {
   e.preventDefault();
     this.setState({ 
@@ -54,6 +54,20 @@ enterName = e => {
     });
 };
 
+//Handles state change for the roster
+handlePlayerChange = (e) => {
+  const index = e.currentTarget.title
+  const intIndex = parseInt(index, 10)
+  const newRoster = this.state.roster.map((p, i) => {
+    if(i === intIndex){
+      p = e.target.value
+    }
+   return p
+  })
+  this.setState({
+    roster: newRoster
+  })
+}
 //Takes in the roster and sets the batting order and defense
 generateLineup = event => {
   event.preventDefault();
@@ -63,9 +77,10 @@ generateLineup = event => {
   reverseOrder = reverseOrder.reverse()
   this.setState({
     offense: battingOrder,
-    defense: reverseOrder
-  })
-  this.setDefense()
+    defense: reverseOrder,
+    inning: 0,
+  }, this.setDefense)
+  
 }
 
 //Randomly shuffles the roster to generate a batting order and defense
@@ -85,7 +100,6 @@ shuffle = (array) => {
 setDefense = () => {
   // Runs if there are 7 or less players
   if(this.state.roster.length <= 7 && this.state.inning < 4){
-      
         if(this.state.inning === 0){
         const players = this.state.roster.slice()
         const defense = this.shuffle(players)
@@ -120,20 +134,20 @@ setDefense = () => {
   } 
   // Runs if there are 10-20 players
   else {
-
   if(this.state.inning === 0){
     const players = this.state.roster.slice()
     const defense = this.shuffle(players)
-    
     this.setState({
       defense: defense
   }, this.assignDefense)
-  // Runs if there are 10-15 players
   } else if (this.state.inning > 0 && this.state.inning < 4){
     let defense = this.state.defense
     let newBench = []
     let counter = 0
     let counter2 = 1
+    let counter3 = 9
+    let dif2 = 1
+    let dif3 = 2
     const dif = defense.length - 10
     let bench = defense.splice(10, dif)
     // Runs if there are 16-20 players
@@ -144,7 +158,6 @@ setDefense = () => {
           defense.splice(counter2, 1, bench[i])
           counter2 = counter2 + 2
         } else {
-
         newBench.push(defense[i + counter])
         defense.splice(i + counter, 1, bench[i])
         counter = counter + 1
@@ -155,7 +168,52 @@ setDefense = () => {
       this.setState({
         defense: defense
       }, this.assignDefense)
-    } else {
+    } 
+    // Runs if there are 12 or 13 players
+    else if(dif === 2 || dif === 3){
+      // Runs if there are 12 players
+      if(this.state.inning === 3 && dif === 2){
+        for (let i = 0; i < dif; i++){
+          newBench.push(defense[counter3])
+          defense.splice(counter3, 1, bench[dif2])
+          counter3 = counter3 - 2
+          dif2 = dif2 - 1
+        }
+        const lastE = defense.pop()
+        defense = [lastE, ...defense, ...newBench]
+        this.setState({
+          defense: defense
+        }, this.assignDefense)
+      } 
+      // Runs if there are 13 players
+      else if(this.state.inning === 3 && dif === 3){
+        for (let i = 0; i < dif; i++){
+          newBench.push(defense[counter3])
+          defense.splice(counter3, 1, bench[dif3])
+          counter3 = counter3 - 1
+          dif3 = dif3 - 1
+        }
+        const lastE = defense.pop()
+        defense = [lastE, ...defense, ...newBench]
+        this.setState({
+          defense: defense
+        }, this.assignDefense)
+      }
+      else {
+      for (let i = 0; i < dif; i++){
+        newBench.push(defense[i + counter])
+        defense.splice(i + counter, 1, bench[i])
+        counter = counter + 1
+      }
+      const lastE = defense.pop()
+      defense = [lastE, ...defense, ...newBench]
+      this.setState({
+        defense: defense
+      }, this.assignDefense)
+     }
+    } 
+    // Runs if there are 10, 11, 14, or 15 players
+    else {
     for (let i = 0; i < dif; i++){
       newBench.push(defense[i + counter])
       defense.splice(i + counter, 1, bench[i])
@@ -168,71 +226,6 @@ setDefense = () => {
     }, this.assignDefense)
     }
   } 
-
-
-
-  // else if (this.state.inning === 1){
-  //   let defense = this.state.defense
-    
-  //   let newBench = []
-  //   let counter = 0
-  //   const dif = defense.length - 10
-
-  //   let bench = defense.splice(10, dif)
-
-  //   for (let i = 0; i < dif; i++){
-  //     newBench.push(defense[i + counter])
-  //     defense.splice(i + counter, 1, bench[i])
-  //     counter = counter + 1
-  //   }
-  //   const lastE = defense.pop()
-  //   defense = [lastE, ...defense, ...newBench]
-  //   this.setState({
-  //     defense: defense
-  //   }, this.assignDefense)
-  // } 
-  
-  // else if (this.state.inning === 2){
-  //   let defense = this.state.defense
-    
-  //   let newBench = []
-  //   let counter = 0
-  //   const dif = defense.length - 10
-
-  //   let bench = defense.splice(10, dif)
-
-  //   for (let i = 0; i < dif; i++){
-  //     newBench.push(defense[i + counter])
-  //     defense.splice(i + counter, 1, bench[i])
-  //     counter = counter + 1
-  //   }
-  //   const lastE = defense.pop()
-  //   defense = [lastE, ...defense, ...newBench]
-  //   this.setState({
-  //     defense: defense
-  //   }, this.assignDefense)
-  // } 
-  
-  // else if (this.state.inning === 3){
-  //   let defense = this.state.defense
-    
-  //   let newBench = []
-  //   let counter = 0
-  //   const dif = defense.length - 10
-
-  //   let bench = defense.splice(10, dif)
-
-  //   for (let i = 0; i < dif; i++){
-  //     newBench.push(defense[i + counter])
-  //     defense.splice(i + counter, 1, bench[i])
-  //     counter = counter + 1
-  //   }
-  //   const lastE = defense.pop()
-  //   defense = [lastE, ...defense, ...newBench]
-  //   this.setState({
-  //     defense: defense
-  //   }, this.assignDefense)
-  // }
  }
 }
 
@@ -440,7 +433,6 @@ assignDefenseSevenAndUnder = () => {
   } else {
     setOrPush = "$push"
   }
-  console.log(this.state.index)
 if (this.state.index < this.state.roster.length - 1){
  
 this.state.index++
@@ -554,10 +546,6 @@ handleBenchChange = (e) => {
   })
 };
 
-logs = () => {
-  console.log(this.state.positions)
-}
-
   render() {
     return (
       <div>
@@ -571,7 +559,6 @@ logs = () => {
             enterName={this.enterName}
             />
             <button type="submit" className="btn btn-secondary generateBtn" onClick={this.generateLineup}>Generate Lineup</button>
-            <button type="submit" className="btn btn-secondary generateBtn" onClick={this.logs}>Console Log</button>
             </Col>
             <Col className="rosterBox">
             <div >
