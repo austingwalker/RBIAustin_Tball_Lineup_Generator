@@ -5,3 +5,11 @@
 #rulesList {
     margin-top: 20px; 
  }
+
+ #backBtn {
+     cursor: pointer;
+     background: none;
+     border: none;
+     text-decoration: underline;
+     margin-bottom: 10px;
+ }

@@ -554,7 +554,7 @@ handleBenchChange = (e) => {
       <div>
       <Container className="homeContainer" fluid>
         <Row>
-          <Col id="namesCol">
+          <Col>
             <Names 
             player={this.state.player}
             handleInputChange={this.handleInputChange} 
@@ -563,49 +563,43 @@ handleBenchChange = (e) => {
             />
           </Col>
           <Col md="1" id="nrCol"></Col>
-          <Col id="rosterCol">
+          <Col>
             <Roster
             roster={this.state.roster}
             handlePlayerChange={this.handlePlayerChange}
             />
           </Col>
         </Row>
-
         <Row>
           <Batting
           offense={this.state.offense}
           handleBattingOrderChange={this.handleBattingOrderChange}
           />
         </Row>
-
         <Row>
           <Outfield
           positions={this.state.positions}
           handlePositionChange={this.handlePositionChange}
           />
         </Row>
-
         <Row>
           <Infield
           positions={this.state.positions}
           handlePositionChange={this.handlePositionChange}
           />
         </Row>
-
         <Row>
           <PitcherCatcher
           positions={this.state.positions}
           handlePositionChange={this.handlePositionChange}
           />
         </Row>
-
         <Row>
           <Bench
           positions={this.state.positions}
           handleBenchChange={this.handleBenchChange}
           />
         </Row>
-          
       </Container>
       </div>
     );

@@ -1,5 +1,4 @@
 import React from "react";
-// import {Row, Col, Navbar } from 'reactstrap';
 import "./Names.css"
 
 const Names = (props) => (

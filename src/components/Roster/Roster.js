@@ -8,14 +8,13 @@ const Roster = (props) => (
         <h5 id="roster">Roster: </h5>
             {props.roster.map((p, i)=> (
                 <ContentEditable
-                key={i}
-                className="playerRowBox"
-                title={i}
-                html={props.roster[i]}
-                onChange={props.handlePlayerChange}
-                />
-                ))}
-    
+                    key={i}
+                    className="playerRowBox"
+                    title={i}
+                    html={props.roster[i]}
+                    onChange={props.handlePlayerChange}
+                    />
+            ))}
     </div>
 );
 

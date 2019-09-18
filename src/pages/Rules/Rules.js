@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Container, Row, Col } from 'reactstrap';
+import { Link } from "react-router-dom";
 import "./Rules.css"
 
 
@@ -7,6 +7,7 @@ class Rules extends Component {
   render() {
     return (
         <div id="rulesBox">
+        <Link to={"/"}><button id="backBtn"><i class="fas fa-long-arrow-alt-left"></i> Back</button></Link>
           <h1>RBI Austin Tee Ball Defensive Rules</h1>
           <ol id="rulesList">
             <li>

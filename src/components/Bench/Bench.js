@@ -1,5 +1,5 @@
 import React from "react";
-import {Row, Col, Navbar } from 'reactstrap';
+import {Row} from 'reactstrap';
 import ContentEditable from 'react-contenteditable';
 import "./Bench.css"
 
