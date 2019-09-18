@@ -4,7 +4,7 @@
   "private": true,
   "homepage": "https://austingwalker.github.io",
   "dependencies": {
-    "axios": "^0.16.2",
+    "axios": "^0.18.1",
     "gh-pages": "^2.0.1",
     "immutability-helper": "^3.0.1",
     "react": "^16.0.0",
