@@ -6,3 +6,33 @@
     padding-right: 20px;
 }
 
+
+
+.benchOrderSubRow {
+    margin: auto;
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+
+.benchBox {
+    background: white;
+    border: 1px solid gray;
+    width: 10%;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    text-align: center;
+}
+
+.bench {
+    margin-left: 0;
+}
+
+@media screen and (max-width: 450px) {
+    .benchBox {
+        width: 50%;
+  }
+}

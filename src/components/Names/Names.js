@@ -7,7 +7,7 @@ const Names = (props) => (
     <div className="wrapper wrapperBox">
         <form className="nameBox">
             <div className="form-group nameInput">
-                <input type="text" className="form-control" placeholder="name" name="player" value={props.player} onChange={props.handleInputChange}/>
+                <input type="text" className="form-control nameInput" placeholder="name" name="player" value={props.player} onChange={props.handleInputChange}/>
             </div>
             <button type="submit" className="btn btn-primary nameBtn" onClick={props.enterName}>Add Player</button>
             <button  className="btn btn-secondary generateBtn" onClick={props.generateLineup}>Generate Lineup</button>

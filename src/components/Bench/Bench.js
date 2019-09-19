@@ -5,7 +5,7 @@ import "./Bench.css"
 
 const Bench = (props) => (
     <div id="benchDiv">
-        <Row className="title bench">
+        <Row className="bench">
             <h5>Bench</h5>
         </Row>
         <Row className="benchOrderRow">

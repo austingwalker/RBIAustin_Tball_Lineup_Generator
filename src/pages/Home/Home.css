@@ -22,24 +22,6 @@
     padding: 10px;
 }
 
-.benchOrderSubRow {
-    margin: auto;
-    width: 100%;
-    height: 100%;
-    padding: 10px;
-    padding-top: 5px;
-    padding-bottom: 5px;
-}
-
-
-.benchBox {
-    background: white;
-    border: 1px solid gray;
-    width: 10%;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    text-align: center;
-}
 
 .playerBox {
     background: white;
@@ -61,11 +43,6 @@
     margin-top: 20px;
     margin-left: 25px;
 }
-
-.bench {
-    margin-left: 0;
-}
-
 
 .position{
     font-size: 16px;
@@ -96,7 +73,4 @@
         width: 50%;
     }
 
-    .benchBox {
-        width: 20%;
-  }
 }

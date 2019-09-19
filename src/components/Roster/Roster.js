@@ -6,6 +6,7 @@ import "./Roster.css"
 const Roster = (props) => (
     <div id="rosterBox">
         <h5 id="roster">Roster: </h5>
+        <div>
             {props.roster.map((p, i)=> (
                 <ContentEditable
                     key={i}
@@ -15,6 +16,7 @@ const Roster = (props) => (
                     onChange={props.handlePlayerChange}
                     />
             ))}
+        </div>
     </div>
 );
 

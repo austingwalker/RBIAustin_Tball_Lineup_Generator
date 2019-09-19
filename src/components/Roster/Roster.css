@@ -1,13 +1,13 @@
 #rosterBox {
-    border: 1px solid black;
+    border: 1px solid gray;
     height: 100%;
     background: white;
-    padding: 20px;
+    padding: 0px;
 }
 
 .playerRowBox {
     background: white;
-    display: inline-flex;
+    display: inline-block;
     padding: 10px;
     width: 25%;
     border: 1px solid gray;
@@ -17,4 +17,5 @@
 #roster {
     color: black;
     padding: 10px;
+    padding-left: 5px;
 }
