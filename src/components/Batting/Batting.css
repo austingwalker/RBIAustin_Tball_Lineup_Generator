@@ -1,6 +1,8 @@
 #battingDiv {
     width: 100%;
     padding: 30px;
+    padding-left: 20px;
+    padding-right: 20px;
     margin-top: 20px;
 }
 
@@ -22,6 +24,7 @@
 
 #orderNum {
     text-align: left;
+    margin-left: 2px;
 }
 
 .battingOrderBox{
