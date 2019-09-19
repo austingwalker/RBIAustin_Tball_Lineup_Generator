@@ -9,6 +9,8 @@
     background: white;
     display: inline-block;
     padding: 10px;
+    padding-left: 0;
+    padding-right: 0;
     width: 25%;
     border: 1px solid gray;
     text-align: center;
