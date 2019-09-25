@@ -2,13 +2,10 @@
 <br />
 <p align="center">
   <h3 align="center">Tee ball Lineup Generator README</h3>
-  <br/>
-  <a href="https://github.com/austingwalker/RBIAustin_Tball_Lineup_Generator"><strong>Explore the docs »</strong></a>
   <br />
-  <br />
-  <a href="https://drive.google.com/file/d/1wMFjBJU7LzEMdPYdizojkkg2OIXKRzZC/view?usp=sharing">View Demo</a>
+  <a align="center" href="https://drive.google.com/file/d/1wMFjBJU7LzEMdPYdizojkkg2OIXKRzZC/view?usp=sharing">View Demo</a>
   ·
-  <a href="https://www.rbiaustintballlineup.com/">Use Live Application Here</a>
+  <a align="center" href="https://www.rbiaustintballlineup.com/">Use Live Application Here</a>
 </p>
 
 
@@ -29,7 +26,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](./public/assets/images/tball_lineup_app.png)
+[![Application Screen Shot](./public/assets/images/tball_lineup_app.png)
 
 This application was created to better serve the Tee Ball coaches of RBI Austin. Tee Ball lineups require adhering to some complex rules in order to ensure fair playing time for all kids. These rules however make creating a lineup confusing and time consuming for coaches. Especially when a player doesn't show up to a game or extra players show up causing the coach to have to re-do the lineup. By using this app a coach can now make a lineup in 30 seconds rather than 30 minutes.
 
@@ -45,10 +42,12 @@ The app gives coaches two options.
     
   - Bench Rule: With a lineup of thirteen (13) or less players a player must not sit the bench more than one (1) inning.
 
+  - *IF there are 7 or less players added to the roster the lineup will not meet RBI Austin Rules
 
 
 
 ### Built With
+
 * [React](https://reactjs.org/)
 * [JavaScript](https://www.javascript.com/)
 * [Bootstrap](https://getbootstrap.com)
@@ -68,6 +67,10 @@ git clone https://github.com/austingwalker/RBIAustin_Tball_Lineup_Generator.git
 2. Install NPM packages
 ```sh
 npm install OR yarn install
+```
+3. Start the application on your local machine
+```sh
+npm start OR yarn start
 ```
 
 
