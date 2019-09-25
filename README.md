@@ -1,11 +1,12 @@
 <!-- PROJECT LOGO -->
 <br />
-<p align="center">
-  <h3 align="center">Tee ball Lineup Generator README</h3>
+<p>
+  <h3>Tee ball Lineup Generator README</h3>
   <br />
-  <a align="center" href="https://drive.google.com/file/d/1wMFjBJU7LzEMdPYdizojkkg2OIXKRzZC/view?usp=sharing">View Demo</a>
+  <a href="https://drive.google.com/file/d/1wMFjBJU7LzEMdPYdizojkkg2OIXKRzZC/view?usp=sharing" target="_blank">View Demo</a>
   ·
-  <a align="center" href="https://www.rbiaustintballlineup.com/">Use Live Application Here</a>
+  <a href="https://www.rbiaustintballlineup.com/" target="_blank">Use Live Application Here</a>
+  <br/>
 </p>
 
 
@@ -26,7 +27,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Application Screen Shot](./public/assets/images/tball_lineup_app.png)
+[Application Screen Shot](./public/assets/images/tball_lineup_app.png)
 
 This application was created to better serve the Tee Ball coaches of RBI Austin. Tee Ball lineups require adhering to some complex rules in order to ensure fair playing time for all kids. These rules however make creating a lineup confusing and time consuming for coaches. Especially when a player doesn't show up to a game or extra players show up causing the coach to have to re-do the lineup. By using this app a coach can now make a lineup in 30 seconds rather than 30 minutes.
 
@@ -78,7 +79,7 @@ npm start OR yarn start
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-<a href="https://drive.google.com/file/d/1wMFjBJU7LzEMdPYdizojkkg2OIXKRzZC/view?usp=sharing">View Demo Here</a>
+<a href="https://drive.google.com/file/d/1wMFjBJU7LzEMdPYdizojkkg2OIXKRzZC/view?usp=sharing" target="_blank">View Demo Here</a>
 
 _Check out the bulk of the logic code here [Home.js](https://github.com/austingwalker/RBIAustin_Tball_Lineup_Generator/blob/master/src/pages/Home/Home.js)_
 
