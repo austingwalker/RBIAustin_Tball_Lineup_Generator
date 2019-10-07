@@ -24,7 +24,8 @@
 }
 
 #rosterDelete{
-    background: white;
+    background: none;
+    color: red;
     position: absolute;
     top: 0;
     right: 0;

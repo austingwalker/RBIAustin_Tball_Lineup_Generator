@@ -10,7 +10,7 @@ const Roster = (props) => (
         <div>
             {props.roster.map((p, i)=> (
                 <div className="playerRowBox">
-                    <button id="rosterDelete" value={i} onClick={props.handleRosterDelete}>X</button>
+                    <button id="rosterDelete" value={i} onClick={props.handleRosterDelete}>x</button>
                     <ContentEditable
                     key={i}
                     title={i}
