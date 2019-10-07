@@ -71,6 +71,15 @@ handlePlayerChange = (e) => {
     roster: newRoster
   })
 }
+
+handleRosterDelete = (e) => {
+  const index = e.target.value
+  let newRoster = this.state.roster
+  newRoster.splice(index, 1)
+  this.setState({
+    roster: newRoster
+  })
+}
 //Takes in the roster and sets the batting order and defense
 generateLineup = event => {
   event.preventDefault();
@@ -78,9 +87,28 @@ generateLineup = event => {
   const battingOrder = this.shuffle(kids)
   let reverseOrder = battingOrder.slice()
   reverseOrder = reverseOrder.reverse()
+  const positions = { 
+    pitcher: ["", "", "", ""],
+    catcher: ["", "", "", ""],
+    first: ["", "", "", ""],
+    second: ["", "", "", ""],
+    shortStop: ["", "", "", ""],
+    third: ["", "", "", ""],
+    right: ["", "", "", ""],
+    rightCenter: ["", "", "", ""],
+    leftCenter: ["", "", "", ""],
+    left: ["", "", "", ""],
+    bench: {
+        one: ["", "", "", "", "", "", "", "", "", ""],
+        two: ["", "", "", "", "", "", "", "", "", ""],
+        three: ["", "", "", "", "", "", "", "", "", ""],
+        four: ["", "", "", "", "", "", "", "", "", ""]
+    },
+  }
   this.setState({
     offense: battingOrder,
     defense: reverseOrder,
+    positions: positions,
     inning: 0,
   }, this.setDefense)
   
@@ -101,6 +129,7 @@ shuffle = (array) => {
 
 //Sets the defense array order for the positions to be generated from
 setDefense = () => {
+ 
   // Runs if there are 7 or less players
   if(this.state.roster.length <= 7 && this.state.inning < 4){
         if(this.state.inning === 0){
@@ -136,7 +165,8 @@ setDefense = () => {
   }
   } 
   // Runs if there are 10-20 players
-  else {
+ else {
+    console.log("Greater than 9")
   if(this.state.inning === 0){
     const players = this.state.roster.slice()
     const defense = this.shuffle(players)
@@ -566,6 +596,7 @@ handleBenchChange = (e) => {
           <Col>
             <Roster
             roster={this.state.roster}
+            handleRosterDelete={this.handleRosterDelete}
             handlePlayerChange={this.handlePlayerChange}
             />
           </Col>
